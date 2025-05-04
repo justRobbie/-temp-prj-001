@@ -1,26 +1,187 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #171717;
+    --hover-background: #fafafafa;
+    --border-color: #cacaca;
+    --container-padding: 20px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+        --hover-background: #171717;
+        --border-color: #282828;
+    }
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    display: grid;
+    height: 100vh;
+    width: 100%;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
+    grid-template-rows: auto 1fr;
+}
+
+aside a,
+footer a,
+main>section,
+nav {
+    padding: var(--container-padding);
+}
+
+aside,
+footer,
+main>section,
+nav {
+    border-color: var(--border-color);
+}
+
+aside {
+    grid-area: aside;
+    border-right-width: 1px;
+}
+
+footer {
+    grid-area: footer;
+    border-top-width: 1px;
+}
+
+aside a,
+footer a {
+    @apply flex items-center gap-2;
+    width: 100%;
+}
+
+aside a {
+    flex-direction: row;
+    justify-content: start;
+}
+
+aside a svg {
+    font-size: 1em;
+}
+
+aside a[data-selected="true"] {
+    border-left: 10px solid #fff;
+}
+
+footer a {
+    flex-direction: column;
+    justify-content: center;
+}
+
+footer a[data-selected="true"] {
+    border-top: 3px solid #fff;
+}
+
+aside a:hover,
+footer a:hover {
+    background-color: var(--hover-background);
+}
+
+footer a span {
+    @apply font-bold;
+    font-size: 0.7em;
+}
+
+main {
+    grid-area: main;
+    overflow: auto;
+}
+
+nav {
+    grid-area: nav;
+    border-bottom-width: 1px;
+}
+
+#quick-links ul {
+    @apply flex flex-row items-center justify-start gap-2;
+    @apply w-full;
+}
+
+#quick-links ul li a {
+    grid-area: link;
+}
+
+#quick-links ul li:hover a {
+    text-decoration: underline;
+}
+
+#quick-links ul li span {
+    grid-area: description;
+    opacity: 30%;
+    font-size: 0.8em;
+}
+
+#quick-links ul li svg {
+    grid-area: icon;
+}
+
+#quick-links ul li {
+    display: grid;
+    row-gap: 10px;
+    justify-content: center;
+    align-items: center;
+    grid-template-areas:
+        "link           icon"
+        "description    icon"
+    ;
+}
+
+#kpis ul li,
+#quick-links ul li {
+    @apply hover:bg-gray-950;
+    height: 100%;
+    border: 1px solid #171717;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#kpis ul li {
+    min-width: 200px;
+}
+
+@media only screen and (max-width: 1499px) {
+    aside {
+        display: none;
+    }
+
+    body {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "nav"
+            "main"
+            "footer"
+        ;
+    }
+}
+
+@media only screen and (min-width: 1500px) {
+    footer {
+        display: none;
+    }
+
+    body {
+        grid-template-columns: minmax(min-content, 20%) 1fr;
+        grid-template-areas:
+            "aside nav"
+            "aside main"
+        ;
+    }
 }
