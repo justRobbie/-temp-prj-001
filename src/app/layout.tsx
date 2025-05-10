@@ -4,6 +4,7 @@ import "./globals.css";
 import LayoutFooterMenu from "@/components/Footer.Layout";
 import LayoutAsideMenu from "@/components/Aside.Layout";
 import LayoutNavigator from "@/components/Nav.Layout";
+import LayoutForm from "@/components/Form.Layout";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -32,9 +33,11 @@ export default function RootLayout({
             >
                 <LayoutAsideMenu className="h-full" />
 
-                <LayoutNavigator className="w-full"/>
+                <LayoutNavigator />
 
-                <main className="flex flex-col gap-[20px] justify-start items-start w-full h-full">
+                <LayoutForm />
+
+                <main className="flex flex-col justify-start items-start h-full">
                     {children}
                 </main>
 
