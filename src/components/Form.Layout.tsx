@@ -1,13 +1,10 @@
 "use client"
 
-import { useSearchParams } from "next/navigation";
 import { HTMLAttributes } from "react";
 
 const LayoutForm = (props: HTMLAttributes<HTMLElement>) => {
-    const params = useSearchParams();
-
-    return <form data-active={params.get("layout") === "form"} data-component="layout-form" {...props}>
-        boo: {JSON.stringify(Array.from(params.entries()))}
+    return <form data-active="false" data-component="layout-form" {...props}>
+        Nothing here
     </form>
 };
 
