@@ -12,12 +12,20 @@ const LayoutNavigator = (props: HTMLAttributes<HTMLElement>) => {
         LightModeIcon
     } = Icons;
 
-    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    const [theme, toggle] = useState<"light" | "dark">(prefersDarkMode ? "dark" : "light");
+    const [theme, toggle] = useState<"light" | "dark">("light");
     const pathname = usePathname();
 
     useEffect(() => {
+        if (!window) return;
+
+        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        toggle(prefersDarkMode ? "dark" : "light");
+    }, []);
+
+    useEffect(() => {
+        if (!document.documentElement) return;
+        
         document.documentElement.setAttribute("data-theme", theme);
     }, [theme]);
 
