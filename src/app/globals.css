@@ -109,7 +109,10 @@ button[data-styletype]:hover svg {
 }
 
 footer {
-    grid-area: footer;
+    position: fixed;
+    top: 100%;
+    width: 100%;
+    transform: translate(0px, -100%);
     border-top-width: 1px;
 }
 
@@ -637,7 +640,7 @@ table thead th {
         grid-template-areas:
             "form nav"
             "form main"
-            "footer footer"
+            ". ."
         ;
     }
 
