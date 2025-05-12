@@ -17,6 +17,11 @@ import {
     IoDocumentTextOutline
 } from "react-icons/io5";
 
+import { 
+    MdDarkMode,
+    MdLightMode 
+} from "react-icons/md";
+
 import {
     RiCalendarTodoLine,
     RiLink,
@@ -33,8 +38,10 @@ const Icons = {
     Calendar1Icon: RiCalendarTodoLine,
     CameraIcon: FaCamera,
     CloseIcon: IoMdClose,
+    DarkModeIcon: MdDarkMode,
     DashboardIcon: RxDashboard,
     HomeIcon: FaHome,
+    LightModeIcon: MdLightMode,
     LinkIcon: RiLink,
     MegaphoneIcon: RiMegaphoneLine,
     ReportIcon: IoDocumentTextOutline,

@@ -1,12 +1,25 @@
 "use client"
 
 import { usePathname } from "next/navigation";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
 import { COMP_FOOTER_LINKS } from "./components.global";
 import Link from "next/link";
+import Icons from "@/app/icons";
 
 const LayoutNavigator = (props: HTMLAttributes<HTMLElement>) => {
+    const {
+        DarkModeIcon,
+        LightModeIcon
+    } = Icons;
+
+    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    const [theme, toggle] = useState<"light" | "dark">(prefersDarkMode ? "dark" : "light");
     const pathname = usePathname();
+
+    useEffect(() => {
+        document.documentElement.setAttribute("data-theme", theme);
+    }, [theme]);
 
     return <nav {...props}>
         <h1 className="font-extrabold text-2xl">
@@ -26,6 +39,11 @@ const LayoutNavigator = (props: HTMLAttributes<HTMLElement>) => {
                 </span>
             </>}
         </h1>
+
+        <button type="button" className="ml-auto" onClick={() => toggle(t => t === "dark" ? "light" : "dark")}>
+            {theme === "dark" && <LightModeIcon />}
+            {theme === "light" && <DarkModeIcon />}
+        </button>
     </nav>
 };
 

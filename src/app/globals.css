@@ -18,17 +18,15 @@
     --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --background: #0a0a0a;
-        --border-color: #282828;
-        --foreground: #ededed;
-        --hover-background: #171717;
-        --menu-select-background: #0c0a31;
-        --select-highlight: #231e78;
-        --theme-primary-background: #fff;
-        --theme-primary-color: #000;
-    }
+[data-theme="dark"] {
+    --background: #0a0a0a;
+    --border-color: #282828;
+    --foreground: #ededed;
+    --hover-background: #171717;
+    --menu-select-background: #0c0a31;
+    --select-highlight: #231e78;
+    --theme-primary-background: #fff;
+    --theme-primary-color: #000;
 }
 
 * {
@@ -66,7 +64,8 @@ aside,
 footer,
 form[data-component="layout-form"],
 main>section,
-nav {
+nav,
+nav button {
     border-color: var(--border-color);
 }
 
@@ -200,8 +199,16 @@ main>section {
 }
 
 nav {
+    @apply flex flex-row justify-start items-center flex-nowrap gap-2;
     grid-area: nav;
     border-bottom-width: 1px;
+}
+
+nav button {
+    @apply rounded-full;
+    border-style: solid;
+    border-width: 1px;
+    padding: 10px;
 }
 
 section[data-component="campaign"] {
@@ -560,10 +567,6 @@ table thead th {
     h1,
     h2 {
         font-size: 1.4em;
-    }
-
-    nav {
-        @apply flex flex-row justify-start items-center;
     }
 
     #actions {
