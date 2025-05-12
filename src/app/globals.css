@@ -109,6 +109,8 @@ button[data-styletype]:hover svg {
 }
 
 footer {
+    z-index: 10;
+    background-color: var(--background);
     position: fixed;
     top: 100%;
     width: 100%;
