@@ -123,7 +123,7 @@ export default function Home() {
                 <hr className="w-full h-[1px] my-3 opacity-20" />
 
                 <header className="w-full">
-                    <ul className="w-full flex flex-row overflow-x-auto flex-nowrap gap-3">{VISIT_STATS.map(({ icon, id, title, value }) => <li key={id}>
+                    <ul>{VISIT_STATS.map(({ icon, id, title, value }) => <li key={id}>
                         {icon}
 
                         <span>{value}</span>

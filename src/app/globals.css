@@ -3,11 +3,9 @@
 :root {
     --background: #ffffff;
     --border-color: #ebebeb;
-    --container-padding: 20px;
     --foreground: #171717;
     --hover-background: #fafafafa;
     --menu-select-background: #bcdfff7f;
-    --nav-height: 75px;
     --theme-primary-background: #000;
     --theme-primary-color: #fff;
     --select-highlight: #18153e;
@@ -157,6 +155,11 @@ aside a[data-selected="true"] {
     background-color: var(--menu-select-background);
 }
 
+div[data-wrapper="dynamic-table"] {
+    width: 100%;
+    overflow: auto;
+}
+
 footer a {
     flex-direction: column;
     justify-content: center;
@@ -187,6 +190,7 @@ h2 {
 }
 
 main {
+    --padding-margin: calc(var(--container-padding) * 5);
     grid-area: main;
     overflow: auto;
 }
@@ -320,16 +324,8 @@ table thead th {
 }
 
 #actions-visits {
-    display: grid;
     column-gap: 30px;
     row-gap: 30px;
-}
-
-#actions {
-    display: grid;
-    grid-area: actions;
-    column-gap: 10px;
-    row-gap: 10px;
 }
 
 #actions button {
@@ -344,7 +340,8 @@ table thead th {
 }
 
 #quick-links ul,
-#kpis ul {
+#kpis ul,
+#visits header ul {
     @apply w-full;
     overflow-x: auto;
     flex-wrap: nowrap;
@@ -352,6 +349,18 @@ table thead th {
 
 #quick-links ul {
     @apply flex flex-row items-center justify-start gap-2;
+}
+
+#quick-links ul li {
+    display: grid;
+    row-gap: 10px;
+    justify-content: center;
+    min-width: 200px;
+    align-items: center;
+    grid-template-areas:
+        "link           icon"
+        "description    icon"
+    ;
 }
 
 #quick-links ul li a {
@@ -370,17 +379,6 @@ table thead th {
 
 #quick-links ul li svg {
     grid-area: icon;
-}
-
-#quick-links ul li {
-    display: grid;
-    row-gap: 10px;
-    justify-content: center;
-    align-items: center;
-    grid-template-areas:
-        "link           icon"
-        "description    icon"
-    ;
 }
 
 #kpis ul li,
@@ -409,18 +407,14 @@ table thead th {
 }
 
 #kpis ul {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(250px, 1fr));
     column-gap: 10px;
     row-gap: 10px;
 }
 
-#kpis ul li {
-    min-width: 200px;
-}
-
 #panel {
     display: grid;
+    justify-content: center;
+    align-items: center;
 }
 
 #products ul li img {
@@ -482,12 +476,15 @@ table thead th {
     @apply flex flex-col gap-2;
     border-radius: 10px;
     border: 1px solid var(--border-color);
-    padding: 15px;
     grid-area: visits;
+    padding: 15px;
+}
+
+#visits header ul {
+    @apply flex flex-row justify-start gap-3;
 }
 
 #visits img {
-    max-width: 500px;
     border-radius: 10px;
     border: 1px solid var(--border-color);
 }
@@ -524,6 +521,108 @@ table thead th {
     ;
 }
 
+@media only screen and (max-width: 499px) {
+    :root {
+        --container-padding: 5px;
+        --nav-height: auto;
+    }
+
+    h1,
+    h2 {
+        font-size: 1.6em;
+    }
+
+    nav a,
+    nav span:nth-child(2) {
+        display: none;
+    }
+
+    #actions,
+    #line {
+        display: none;
+    }
+
+    #actions-visits {
+        @apply flex flex-col justify-start items-start;
+    }
+
+    #visits {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 500px) {
+    :root {
+        --container-padding: 5px;
+        --nav-height: 55px;
+    }
+
+    h1,
+    h2 {
+        font-size: 1.4em;
+    }
+
+    nav {
+        @apply flex flex-row justify-start items-center;
+    }
+
+    #actions {
+        display: grid;
+        grid-area: actions;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        column-gap: 10px;
+        row-gap: 10px;
+    }
+
+    #actions button {
+        padding: 20px;
+    }
+
+    #actions-visits {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "actions"
+            "visits"
+        ;
+    }
+
+    #visits img {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 1080px) {
+    #kpis ul {
+        @apply flex flex-col justify-start;
+    }
+
+    #panel {
+        @apply flex flex-col justify-start;
+    }
+}
+
+@media only screen and (min-width: 1081px) {
+    #kpis ul {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(100px, 1fr));
+    }
+
+    #kpis ul li {
+        min-width: 100px;
+    }
+
+    #panel {
+        grid-template-columns: 1fr 286px;
+        grid-template-areas:
+            "line doughnut"
+            "kpis kpis"
+        ;
+    }
+}
+
 @media only screen and (max-width: 1499px) {
     aside {
         display: none;
@@ -539,16 +638,9 @@ table thead th {
         ;
     }
 
-    h1,
-    h2 {
-        font-size: 1.4em;
+    main>section:last-of-type {
+        padding-bottom: 50px;
     }
-
-    main {
-        --padding-margin: calc(var(--container-padding) * 5);
-    }
-
-
 
     section[data-component="team"] {
         @apply flex-col;
@@ -561,46 +653,20 @@ table thead th {
     section[data-component="team"] header p {
         width: 100%;
     }
-
-    #actions-visits {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "actions"
-            "visits"
-        ;
-    }
-
-    #actions {
-        grid-template-columns: repeat(2, minmax(250px, 1fr));
-    }
-
-    #actions button {
-        padding: 20px;
-    }
-
-    #panel {
-        justify-content: center;
-        align-items: center;
-        grid-template-columns: 1fr 286px;
-        grid-template-areas: 
-            "line doughnut"
-            "kpis kpis"
-        ;
-    }
-
-    #visits img {
-        width: 100%;
-        max-width: 100%;
-    }
 }
 
 @media only screen and (min-width: 1500px) {
+    :root {
+        --container-padding: 20px;
+        --nav-height: 75px;
+    }
+
     footer {
         display: none;
     }
 
     body {
-        grid-template-columns: repeat(1, minmax(min-content, 20%)) auto 1fr;
+        grid-template-columns: 250px auto 1fr;
         grid-template-rows: var(--nav-height) auto;
         grid-template-areas:
             "aside form nav"
@@ -629,6 +695,11 @@ table thead th {
         max-width: 350px;
     }
 
+    #actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(250px, 1fr));
+    }
+
     #actions-visits {
         grid-template-columns: auto 1fr;
         grid-template-areas:
@@ -636,13 +707,9 @@ table thead th {
         ;
     }
 
-    #actions {
-        grid-template-columns: repeat(2, minmax(250px, 350px));
-    }
-
     #panel {
         grid-template-columns: 1fr 1fr;
-        grid-template-areas: 
+        grid-template-areas:
             "line doughnut"
             "kpis kpis"
         ;
