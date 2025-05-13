@@ -14,7 +14,7 @@ const LayoutNavigator = (props: HTMLAttributes<HTMLElement>) => {
         LightModeIcon
     } = Icons;
 
-    const [theme, toggle] = useState<themeType>(localStorage.getItem("theme") as themeType ?? "light");
+    const [theme, toggle] = useState<themeType>("light");
     const pathname = usePathname();
 
     useEffect(() => {
@@ -22,7 +22,7 @@ const LayoutNavigator = (props: HTMLAttributes<HTMLElement>) => {
 
         const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-        toggle(prefersDarkMode ? "dark" : "light");
+        toggle(localStorage.getItem("theme") as themeType ?? prefersDarkMode ? "dark" : "light");
     }, []);
 
     useEffect(() => {
