@@ -43,6 +43,7 @@ export default function Login() {
             router.push('/')
         } else {
             setError(new Error('Credenciais inválidas.'))
+            setLoading(false)
         }
     }
 
