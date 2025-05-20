@@ -33,6 +33,13 @@
     box-sizing: border-box;
 }
 
+*:disabled,
+*[data-state="disabled"] {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
 body {
     display: grid;
     height: 100vh;
@@ -65,7 +72,8 @@ footer,
 form[data-component="layout-form"],
 main>section,
 nav,
-nav button {
+nav button,
+#login-form section {
     border-color: var(--border-color);
 }
 
@@ -164,6 +172,12 @@ div[data-wrapper="dynamic-table"] {
     overflow: auto;
 }
 
+fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 footer a {
     flex-direction: column;
     justify-content: center;
@@ -175,7 +189,8 @@ footer a[data-selected="true"] {
 }
 
 aside a:hover,
-footer a:hover {
+footer a:hover,
+input:hover {
     background-color: var(--hover-background);
 }
 
@@ -184,6 +199,11 @@ footer a span {
     font-size: 0.7em;
 }
 
+input {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 10px;
+}
 
 h1 {
     font-weight: 900;
@@ -418,6 +438,36 @@ table thead th {
     grid-area: line;
 }
 
+#login-form,
+#login-form section {
+    @apply flex flex-col justify-center items-center;
+}
+
+#login-form {
+    height: 100%;
+    width: 100%;
+}
+
+#login-form section {
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#login-form section *:not(button[type="button"]) {
+    width: 100%;
+}
+
+#login-form section fieldset div button[type="button"] {
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+#login-form section fieldset div input {
+    border-right-width: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
 #kpis ul {
     column-gap: 10px;
     row-gap: 10px;
@@ -536,7 +586,7 @@ table thead th {
 @media only screen and (max-width: 499px) {
     :root {
         --container-padding: 5px;
-        --nav-height: auto;
+        --nav-height: 55px;
     }
 
     h1,
@@ -556,6 +606,13 @@ table thead th {
 
     #actions-visits {
         @apply flex flex-col justify-start items-start;
+    }
+
+    #login-form section {
+        @apply gap-y-7;
+        border-width: 0px;
+        min-height: 100%;
+        min-width: 100%;
     }
 
     #visits {
@@ -594,6 +651,13 @@ table thead th {
             "actions"
             "visits"
         ;
+    }
+
+    #login-form section {
+        @apply gap-y-7;
+        border-width: 1px;
+        min-height: 70%;
+        min-width: 50%;
     }
 
     #visits img {
@@ -713,6 +777,10 @@ table thead th {
         grid-template-areas:
             "actions visits"
         ;
+    }
+
+    #login-form section fieldset {
+        @apply my-auto;
     }
 
     #panel {

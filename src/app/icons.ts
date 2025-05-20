@@ -1,16 +1,27 @@
+import { 
+    AiOutlineLoading3Quarters 
+} from "react-icons/ai";
+
+import { 
+    BsShieldLock 
+} from "react-icons/bs";
+
 import {
     FaArrowUp,
     FaCamera,
     FaCog,
     FaHome,
+    FaRegEye,
+    FaRegEyeSlash,
     FaRegUserCircle,
     FaStore,
     FaUsers
 } from "react-icons/fa";
 
 import {
+    IoIosLogOut, 
     IoMdAdd,
-    IoMdClose
+    IoMdClose,
 } from "react-icons/io";
 
 import {
@@ -40,12 +51,17 @@ const Icons = {
     CloseIcon: IoMdClose,
     DarkModeIcon: MdDarkMode,
     DashboardIcon: RxDashboard,
+    EyeIcon: FaRegEye,
+    EyeSlashIcon: FaRegEyeSlash,
     HomeIcon: FaHome,
     LightModeIcon: MdLightMode,
     LinkIcon: RiLink,
+    LoadingIcon: AiOutlineLoading3Quarters,
+    LogoutIcon: IoIosLogOut,
     MegaphoneIcon: RiMegaphoneLine,
     ReportIcon: IoDocumentTextOutline,
     SettingsIcon: FaCog,
+    ShieldIcon: BsShieldLock,
     StoreIcon: FaStore,
     UserIcon: FaRegUserCircle,
     UsersIcon: FaUsers

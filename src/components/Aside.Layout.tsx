@@ -10,7 +10,7 @@ const LayoutAsideMenu = (props: HTMLAttributes<HTMLElement>) => {
 
     return <aside {...props}>
         <ul>
-            {COMP_FOOTER_LINKS.map(({ id, name, link, icon }) =>
+            {pathname !== "/login" && COMP_FOOTER_LINKS.map(({ id, name, link, icon }) =>
                 <li key={id}>
                     <Link href={link} data-selected={link === pathname}>
                         {icon}
