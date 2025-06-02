@@ -1,12 +1,36 @@
 @import "tailwindcss";
 
 :root {
-    --background: #ffffff;
-    --border-color: #ebebeb;
+    --default-bg-color: transparent;
+    --default-main-color: #131313;
+    --default-text-color: #000;
+
+    --background: #eceff3;
+    --background-aside: #fff;
+    --background-main-section: #fff;
+    --background-footer: #fff;
+    --background-nav: #243a53;
+    --background-kpi-item: #fff;
+    --background-kpi-icon: #7fafe796;
+    --background-products-item: #fff;
+
+    --border-nav: var(--background-nav);
+    --border-color: #4a6c9469;
+    --border-color-nav-button: #4a6c94;
+
+    --box-show-color-nav: #192a3d38;
+
     --foreground: #171717;
     --hover-background: #fafafafa;
-    --menu-select-background: #bcdfff7f;
-    --theme-primary-background: #000;
+    --menu-select-background: #a5c4e17f;
+
+    --text-title-color: #3b5461;
+    --text-subtitle-color: #647882;
+    --text-kpi-icon: #206788;
+    --text-unselected-navigation-link: #647882;
+    --text-selected-navigation-link: #000;
+
+    --theme-primary-background: #243a53;
     --theme-primary-color: #fff;
     --select-highlight: #18153e;
 }
@@ -19,14 +43,38 @@
 }
 
 [data-theme="dark"] {
-    --background: #0a0a0a;
-    --border-color: #282828;
-    --foreground: #ededed;
-    --hover-background: #171717;
-    --menu-select-background: #0c0a31;
-    --select-highlight: #231e78;
-    --theme-primary-background: #fff;
-    --theme-primary-color: #000;
+    --default-bg-color: transparent;
+    --default-main-color: #131313;
+    --default-text-color: #fff;
+
+    --background: #000;
+    --background-aside: #000;
+    --background-main-section: var(--default-main-color);
+    --background-footer: #000;
+    --background-nav: #000;
+    --background-kpi-item: var(--default-main-color);
+    --background-kpi-icon: #1e1f27;
+    --background-products-item: transparent;
+
+    --border-color: #242424;
+    --border-nav: var(--border-color);
+    --border-color-nav-button: #242424;
+
+    --box-show-color-nav: #192a3d38;
+
+    --foreground: #171717;
+    --hover-background: #1c1c1c;
+    --menu-select-background: #0d1c2bdd;
+
+    --text-title-color: #fff;
+    --text-subtitle-color: #fff;
+    --text-kpi-icon: #306c87;
+    --text-unselected-navigation-link: #fff;
+    --text-selected-navigation-link: #fff;
+
+    --theme-primary-background: #000;
+    --theme-primary-color: #fff;
+    --select-highlight: #18153e;
 }
 
 * {
@@ -45,7 +93,7 @@ body {
     height: 100vh;
     width: 100%;
     background: var(--background);
-    color: var(--foreground);
+    color: var(--default-text-color);
     font-family: Arial, Helvetica, sans-serif;
     grid-template-rows: auto 1fr;
 }
@@ -61,9 +109,7 @@ input {
     cursor: pointer;
 }
 
-aside a,
-form[data-component="layout-form"][data-active="true"],
-nav {
+form[data-component="layout-form"][data-active="true"] {
     padding: var(--container-padding);
 }
 
@@ -71,13 +117,12 @@ aside,
 footer,
 form[data-component="layout-form"],
 main>section,
-nav,
-nav button,
 #login-form section {
     border-color: var(--border-color);
 }
 
 aside {
+    overflow-y: auto;
     grid-area: aside;
     border-right-width: 1px;
 }
@@ -96,13 +141,18 @@ button[data-styletype="primary"] {
     background-color: var(--theme-primary-background);
 }
 
+a[data-styletype="primary"]:focus,
+button[data-styletype="primary"]:focus,
 a[data-styletype="primary"]:hover,
 button[data-styletype="primary"]:hover {
     color: var(--theme-primary-background);
 }
 
+a[data-styletype]:focus,
+button[data-styletype]:focus,
 a[data-styletype]:hover,
 button[data-styletype]:hover {
+    color: var(--default-text-color);
     background-color: var(--hover-background);
 }
 
@@ -111,9 +161,54 @@ button[data-styletype] svg {
     transition: all ease-in-out 0.3s;
 }
 
+a[data-styletype]:focus svg,
+button[data-styletype]:focus svg,
 a[data-styletype]:hover svg,
 button[data-styletype]:hover svg {
     transform: rotate(360deg);
+}
+
+aside {
+    background-color: var(--background-aside);
+    padding: 0 5px;
+}
+
+aside hr {
+    opacity: 0.3;
+    border-color: var(--border-color);
+    background-color: var(--border-color);
+}
+
+aside #actions,
+aside #quick-links,
+aside #navigation-links {
+    padding: 10px;
+}
+
+aside #navigation-links a {
+    @apply flex flex-row items-center;
+    width: 100%;
+    padding: 0 10px;
+    height: 50px;
+    column-gap: 10px;
+    flex-direction: row;
+    justify-content: start;
+    border-radius: 10px;
+    border: 1px solid transparent;
+}
+
+aside #navigation-links a[data-selected="true"] {
+    color: var(--text-selected-navigation-link);
+    border-color: var(--border-color);
+    background-color: var(--menu-select-background);
+}
+
+aside #navigation-links a[data-selected="false"] {
+    color: var(--text-unselected-navigation-link);
+}
+
+aside #navigation-links a svg {
+    font-size: 1.2em;
 }
 
 footer {
@@ -127,6 +222,8 @@ footer {
 }
 
 footer a {
+    @apply flex items-center gap-2;
+    width: 100%;
     padding: 10px;
 }
 
@@ -146,29 +243,10 @@ form[data-component="layout-form"][data-active="false"] {
     overflow: hidden;
 }
 
-aside a,
-footer a {
-    @apply flex items-center gap-2;
-    width: 100%;
-}
-
-aside a {
-    height: var(--nav-height);
-    flex-direction: row;
-    justify-content: start;
-}
-
-aside a svg {
-    font-size: 1em;
-}
-
-aside a[data-selected="true"] {
-    border-left: 10px solid var(--select-highlight);
-    background-color: var(--menu-select-background);
-}
-
 div[data-wrapper="dynamic-table"] {
+    background-color: var(--background-main-section);
     width: 100%;
+    border-radius: 10px;
     overflow: auto;
 }
 
@@ -176,6 +254,10 @@ fieldset {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+footer {
+    background-color: var(--background-footer);
 }
 
 footer a {
@@ -207,10 +289,12 @@ input {
 
 h1 {
     font-weight: 900;
+    color: var(--text-title-color);
 }
 
 h2 {
     font-weight: 700;
+    color: var(--text-subtitle-color);
 }
 
 main {
@@ -220,20 +304,34 @@ main {
 }
 
 main>section {
-    padding: var(--container-padding) var(--padding-margin);
+    width: 100%;
 }
 
 nav {
     @apply flex flex-row justify-start items-center flex-nowrap gap-2;
+    background-color: var(--background-nav);
+    padding: 0px 20px;
     grid-area: nav;
     border-bottom-width: 1px;
+    border-bottom-color: var(--border-nav);
+}
+
+nav * {
+    color: #fff;
 }
 
 nav button {
     @apply rounded-full;
     border-style: solid;
     border-width: 1px;
+    border-color: var(--border-color-nav-button);
     padding: 10px;
+}
+
+section section {
+    padding: 15px;
+    border-radius: 10px;
+    background-color: var(--background-main-section);
 }
 
 section[data-component="campaign"] {
@@ -355,9 +453,17 @@ table thead th {
     text-transform: capitalize;
 }
 
-#actions-visits {
-    column-gap: 30px;
-    row-gap: 30px;
+#actions {
+    display: grid;
+    grid-area: actions;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    column-gap: 10px;
+    row-gap: 10px;
+}
+
+#actions button {
+    padding: 20px;
 }
 
 #actions button {
@@ -372,11 +478,13 @@ table thead th {
 }
 
 #quick-links ul,
-#kpis ul,
 #visits header ul {
-    @apply w-full;
     overflow-x: auto;
     flex-wrap: nowrap;
+}
+
+#quick-links h4 {
+    color: var(--text-unselected-navigation-link);
 }
 
 #quick-links ul {
@@ -387,7 +495,10 @@ table thead th {
     display: grid;
     row-gap: 10px;
     justify-content: center;
-    min-width: 200px;
+    height: 130px;
+    min-height: 130px;
+    max-height: 130px;
+    min-width: 100%;
     align-items: center;
     grid-template-areas:
         "link           icon"
@@ -413,21 +524,92 @@ table thead th {
     grid-area: icon;
 }
 
-#kpis ul li,
+#kpis {
+    @apply flex flex-row justify-start items-center flex-nowrap;
+    width: 100%;
+    max-width: 100%;
+    overflow: auto;
+    grid-area: kpis;
+    gap: 20px;
+}
+
+#kpis li {
+    --height: 150px;
+
+    @apply flex flex-col justify-start items-start gap-2;
+    width: var(--width);
+    max-width: var(--width);
+    min-width: var(--width);
+    height: var(--height);
+    min-height: var(--height);
+    max-height: var(--height);
+    background-color: var(--background-kpi-item);
+}
+
+#kpis li span[data-text="title"] {
+    @apply font-bold;
+    opacity: 0.5;
+    grid-area: title;
+}
+
+#kpis li span[data-text="value"] {
+    @apply text-4xl font-extrabold;
+    grid-area: value;
+}
+
+#kpis li div[data-element="icon"] {
+    @apply flex flex-col justify-center items-center;
+    grid-area: icon;
+    background-color: var(--background-kpi-icon);
+    border-radius: 15px;
+    height: var(--size);
+    width: var(--size);
+}
+
+#kpis li div[data-element="icon"] svg {
+    --icon-size: calc(var(--size) - 20px);
+
+    color: var(--text-kpi-icon);
+    height: var(--icon-size);
+    width: var(--icon-size);
+}
+
+#kpis li div[data-section="header"] {
+    --size: 70px;
+
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr var(--size);
+    grid-template-rows: auto;
+    grid-template-areas:
+        "title  icon"
+        "value  icon"
+    ;
+}
+
+#kpis li div[data-section="desc"] {
+    @apply w-full flex flex-row justify-start items-center gap-3 flex-nowrap mt-auto;
+}
+
+#kpis li div span[data-tendency="up"] {
+    @apply text-green-600;
+}
+
+#kpis li div span[data-tendency="down"] {
+    @apply text-red-300;
+}
+
+#kpis li,
 #quick-links ul li {
     height: 100%;
     border: 1px solid var(--border-color);
-    border-radius: 10px;
+    border-radius: 15px;
     padding: 10px;
 }
 
-#kpis ul li:hover,
+#kpis li:hover,
 #quick-links ul li:hover {
     background-color: var(--hover-background);
-}
-
-#kpis {
-    grid-area: kpis;
 }
 
 #doughnut {
@@ -435,12 +617,22 @@ table thead th {
 }
 
 #line {
+    width: 100%;
+    position: relative;
     grid-area: line;
+    height: 300px
+}
+
+#line canvas {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
 }
 
 #login-form,
 #login-form section {
     @apply flex flex-col justify-center items-center;
+    overflow: hidden;
 }
 
 #login-form {
@@ -468,19 +660,19 @@ table thead th {
     border-top-right-radius: 0px;
 }
 
-#kpis ul {
-    column-gap: 10px;
-    row-gap: 10px;
-}
-
 #panel {
     display: grid;
-    justify-content: center;
-    align-items: center;
+    gap: 20px;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "kpis"
+        "line"
+    ;
 }
 
 #products ul li img {
     --size: 200px;
+
     grid-area: img;
     height: var(--size);
     min-width: var(--size);
@@ -525,6 +717,7 @@ table thead th {
     row-gap: 10px;
     padding-bottom: var(--padding-x);
     border: 1px solid var(--border-color);
+    background-color: var(--background-products-item);
     border-radius: 10px;
     overflow: hidden;
     grid-template-areas:
@@ -537,7 +730,6 @@ table thead th {
 #visits {
     @apply flex flex-col gap-2;
     border-radius: 10px;
-    border: 1px solid var(--border-color);
     grid-area: visits;
     padding: 15px;
 }
@@ -547,6 +739,10 @@ table thead th {
 }
 
 #visits img {
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 300px;
     border-radius: 10px;
     border: 1px solid var(--border-color);
 }
@@ -604,8 +800,8 @@ table thead th {
         display: none;
     }
 
-    #actions-visits {
-        @apply flex flex-col justify-start items-start;
+    #kpis li {
+        --width: 100%;
     }
 
     #login-form section {
@@ -631,26 +827,8 @@ table thead th {
         font-size: 1.4em;
     }
 
-    #actions {
-        display: grid;
-        grid-area: actions;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-        column-gap: 10px;
-        row-gap: 10px;
-    }
-
-    #actions button {
-        padding: 20px;
-    }
-
-    #actions-visits {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "actions"
-            "visits"
-        ;
+    #kpis li {
+        --width: 400px;
     }
 
     #login-form section {
@@ -659,33 +837,15 @@ table thead th {
         min-height: 70%;
         min-width: 50%;
     }
-
-    #visits img {
-        width: 100%;
-        max-width: 100%;
-    }
 }
 
-@media only screen and (max-width: 1080px) {
-    #kpis ul {
-        @apply flex flex-col justify-start;
-    }
-
+/* @media only screen and (max-width: 1080px) {
     #panel {
         @apply flex flex-col justify-start;
     }
-}
+} */
 
-@media only screen and (min-width: 1081px) {
-    #kpis ul {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(100px, 1fr));
-    }
-
-    #kpis ul li {
-        min-width: 100px;
-    }
-
+/* @media only screen and (min-width: 1081px) {
     #panel {
         grid-template-columns: 1fr 286px;
         grid-template-areas:
@@ -693,7 +853,7 @@ table thead th {
             "kpis kpis"
         ;
     }
-}
+} */
 
 @media only screen and (max-width: 1499px) {
     aside {
@@ -708,6 +868,11 @@ table thead th {
             "form main"
             ". ."
         ;
+    }
+
+    main {
+        gap: 20px;
+        padding: 20px;
     }
 
     main>section:last-of-type {
@@ -731,6 +896,7 @@ table thead th {
     :root {
         --container-padding: 20px;
         --nav-height: 75px;
+        --global-gap: 25px;
     }
 
     footer {
@@ -741,18 +907,24 @@ table thead th {
         grid-template-columns: 250px auto 1fr;
         grid-template-rows: var(--nav-height) auto;
         grid-template-areas:
-            "aside form nav"
-            "aside form main"
+            "nav    nav     nav"
+            "aside  form    main"
         ;
     }
 
     main {
         --padding-margin: var(--container-padding);
+        padding: var(--global-gap);
     }
 
     h1,
     h2 {
         font-size: 2em;
+    }
+
+    main,
+    section {
+        gap: var(--global-gap);
     }
 
     section[data-component="team"] {
@@ -767,31 +939,7 @@ table thead th {
         max-width: 350px;
     }
 
-    #actions {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(250px, 1fr));
-    }
-
-    #actions-visits {
-        grid-template-columns: auto 1fr;
-        grid-template-areas:
-            "actions visits"
-        ;
-    }
-
     #login-form section fieldset {
         @apply my-auto;
-    }
-
-    #panel {
-        grid-template-columns: 1fr 1fr;
-        grid-template-areas:
-            "line doughnut"
-            "kpis kpis"
-        ;
-    }
-
-    #visits img {
-        max-width: 100%;
     }
 }

@@ -17,10 +17,12 @@ export default function Manager() {
         StoreIcon
     } = Icons;
 
-    const PROMOTERS = USERS.filter(({ tipo }) => tipo === "Promotor").map(user => { return {
-        ...user,
-        thumbnail: Man$1ProfilePhoto
-    }});
+    const PROMOTERS = USERS.filter(({ tipo }) => tipo === "Promotor").map(user => {
+        return {
+            ...user,
+            thumbnail: Man$1ProfilePhoto
+        }
+    });
 
     const PROMOTERS_STATS = [
         { id: "stat-1", title: "Produtos promovidos", value: VISITATIONS.length, icon: <StoreIcon /> },
@@ -29,55 +31,59 @@ export default function Manager() {
 
     return (
         <Fragment>
-            <section id="users" className="w-full flex flex-col gap-2">
-                <h2>Utilizadores</h2>
-                
-                <button type="button" data-styletype="primary" className="ml-auto">
-                    <AddIcon />
+            <section className="w-full flex flex-col justify-start items-start">
+                <section id="users" className="w-full flex flex-col gap-2">
+                    <h2>Utilizadores</h2>
 
-                    Adicionar utilizador
-                </button>
+                    <button type="button" data-styletype="primary" className="ml-auto">
+                        <AddIcon />
 
-                <DynamicTable list={USERS} className="w-full"/>
+                        Adicionar utilizador
+                    </button>
+
+                    <DynamicTable list={USERS} className="w-full" />
+                </section>
             </section>
 
-            <section id="teams" className="w-full flex flex-col gap-2">
-                <h2>Equipas</h2>
+            <section className="w-full flex flex-col justify-start items-start">
+                <section id="teams" className="w-full flex flex-col gap-2">
+                    <h2>Equipas</h2>
 
-                <button type="button" data-styletype="primary" className="ml-auto">
-                    <AddIcon />
+                    <button type="button" data-styletype="primary" className="ml-auto">
+                        <AddIcon />
 
-                    Criar equipa
-                </button>
+                        Criar equipa
+                    </button>
 
-                <section id="team" data-component="team">
-                    <header>
-                        <h1>Promotores</h1>
+                    <section id="team" data-component="team">
+                        <header>
+                            <h1>Promotores</h1>
 
-                        <hr className="opacity-20" />
+                            <hr className="opacity-20" />
 
-                        <p>Um promotor é um profissional responsável por impulsionar a divulgação e vendas de um produto, serviço ou evento. Ele atua promovendo a marca, interagindo com clientes e potenciais consumidores, além de organizar ações estratégicas para aumentar a visibilidade e aceitação do que está sendo promovido.</p>
+                            <p>Um promotor é um profissional responsável por impulsionar a divulgação e vendas de um produto, serviço ou evento. Ele atua promovendo a marca, interagindo com clientes e potenciais consumidores, além de organizar ações estratégicas para aumentar a visibilidade e aceitação do que está sendo promovido.</p>
 
-                        <hr className="opacity-20" />
-                        
-                        <ul>{PROMOTERS_STATS.map(({ id, icon, title, value }) => <li key={id}>
-                            <span>
-                                {icon}
+                            <hr className="opacity-20" />
 
-                                {title}
-                            </span>
+                            <ul>{PROMOTERS_STATS.map(({ id, icon, title, value }) => <li key={id}>
+                                <span>
+                                    {icon}
 
-                            <span>{value}</span>
+                                    {title}
+                                </span>
+
+                                <span>{value}</span>
+                            </li>)}</ul>
+                        </header>
+
+                        <ul>{PROMOTERS.map(({ id, nome, ["e-mail"]: email, thumbnail }) => <li key={id}>
+                            <div style={{ backgroundImage: `url(${thumbnail.src})` }}></div>
+
+                            <span>{nome}</span>
+
+                            <span>{email}</span>
                         </li>)}</ul>
-                    </header>
-
-                    <ul>{PROMOTERS.map(({ id, nome, ["e-mail"]:email, thumbnail }) => <li key={id}>
-                        <div style={{ backgroundImage: `url(${thumbnail.src})` }}></div>
-
-                        <span>{nome}</span>
-
-                        <span>{email}</span>
-                    </li>)}</ul>
+                    </section>
                 </section>
             </section>
         </Fragment>

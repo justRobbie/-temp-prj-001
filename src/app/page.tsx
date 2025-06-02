@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Link from "next/link";
 import { Fragment } from "react";
 import Icons from "./icons";
 import Image from "next/image";
@@ -7,7 +6,8 @@ import DynamicTable from "@/components/DynamicTable";
 import { PRODUCTS, VISITATIONS } from "@/constants";
 import LuandaMap from "pub/images/map.png";
 import LineChart from "@/components/Chart.Line";
-import DoughnutChart from "@/components/Chart.Doughnut";
+// import DoughnutChart from "@/components/Chart.Doughnut";
+import { formatNumber } from "chart.js/helpers";
 
 export const metadata: Metadata = {
     title: `Home | ${process.env.APP_NAME}`,
@@ -17,32 +17,19 @@ export const metadata: Metadata = {
 export default function Home() {
     const {
         ArrowUpIcon,
-        LinkIcon,
         CloseIcon,
         StoreIcon,
-        CameraIcon
+        CameraIcon,
+        ShapesIcon,
+        TrendArrowDownIcon,
+        TrendArrowUpIcon
     } = Icons;
 
-    const QUICK_LINKS = [
-        { id: "user", path: "#", name: "Adicionar utilizadores", description: "Adicione ou edite utilizadores para o seu ambiente." },
-        { id: "team", path: "/manager", name: "Gerenciar membros", description: "Faça gestão de membros de todas equipas no seu controlo." },
-        { id: "plan", path: "#", name: "Criar planos", description: "Crie, edite e publique planos para as suas equipas" },
-        { id: "reports", path: "#", name: "Extrair relatórios", description: "Faça a extração de resultados dos seus relatórios" },
-        { id: "campaigns", path: "#", name: "Minhas campanhas", description: "Veja a desempenho das suas campanhas" }
-    ];
-
     const KPIS = [
-        { id: "sales", title: "Vendas", value: 1200 },
-        { id: "visits", title: "Visitas concluidas", value: 454 },
-        { id: "increase", title: "Aumentos", value: "25%" },
-        { id: "products", title: "Produtos", value: 432123 },
-    ];
-
-    const ACTIONS = [
-        { id: "mv", title: "Marcar visitas", action: () => { } },
-        { id: "ap", title: "Adicionar produtos", action: () => { } },
-        { id: "er", title: "Extrair relatórios", action: () => { } },
-        { id: "vp", title: "Ver promotores", action: () => { } },
+        { id: "sales", title: "Vendas", value: 1200, tendency: 9, },
+        { id: "visits", title: "Visitas concluidas", value: 454, tendency: 9, },
+        { id: "increase", title: "Aumentos", value: 235, tendency: 9, },
+        { id: "products", title: "Produtos", value: 432123, tendency: 9, },
     ];
 
     const VISIT_STATS = [
@@ -52,55 +39,45 @@ export default function Home() {
     ]
 
     return <Fragment>
-        <section id="quick-links" className="border-b flex flex-col gap-3 w-full">
-            <h2 className="font-bold">
-                <span className="italic opacity-30 mr-2">#</span>
+        <section id="panel">
+            <ul id="kpis">
+                {KPIS.map(({ id, title, value, tendency }) => <li key={id}>
+                    <div data-section="header">
+                        <span data-text="title">{title}</span>
 
-                Links rápidos
-            </h2>
+                        <span data-text="value">{formatNumber(value, "pt-ao", { currency: "akz" })}</span>
 
-            <ul>
-                {QUICK_LINKS.map(({ id, name, path, description }) => <li key={id}>
-                    <Link href={path}>{name}</Link>
+                        <div data-element="icon">
+                            <ShapesIcon />
+                        </div>
+                    </div>
 
-                    <span>{description}</span>
+                    <div data-section="desc">
+                        <span data-tendency={tendency > 0 ? "up" : "down"}>
+                            {tendency > 0 ? <TrendArrowUpIcon /> : <TrendArrowDownIcon />}
+                        </span>
 
-                    <LinkIcon />
+                        <span>
+                            {tendency}%
+
+                            <span className="mx-1">{tendency > 0 ? "Aumentou" : "Diminuiu"}</span>
+
+                            desde ontem
+                        </span>
+                    </div>
                 </li>)}
             </ul>
-        </section>
 
-        <section id="panel" className="w-full">
             <section id="line">
                 <LineChart />
             </section>
 
-            <section id="doughnut">
+            {/* <section id="doughnut">
                 <DoughnutChart />
-            </section>
-
-            <section id="kpis" className="flex flex-col gap-3 w-full">
-                <h2 className="font-bold">
-                    KPIs
-                </h2>
-
-                <ul>
-                    {KPIS.map(({ id, title, value }) => <li key={id} className="flex flex-col justify-start items-start">
-                        <span className="text-sm">{title}</span>
-
-                        <span className="font-extrabold text-2xl">{value}</span>
-                    </li>)}
-                </ul>
-            </section>
+            </section> */}
         </section>
 
-        <section id="actions-visits" className="w-full">
-            <section id="actions" >
-                {ACTIONS.map(({ id, title }) => <button type="button" key={id}>
-                    {title}
-                </button>)}
-            </section>
-
+        <section>
             <section id="visits" >
                 <h2 className="font-bold">
                     Próxima visita
@@ -136,22 +113,24 @@ export default function Home() {
             </section>
         </section>
 
-        <section id="products" className="w-full">
-            <h2 className="font-bold">
-                Produtos mais populares
-            </h2>
+        <section id="products">
+            <section className="w-full">
+                <h2 className="font-bold">
+                    Produtos mais populares
+                </h2>
 
-            <ul className="w-full flex flex-row justify-start items-center gap-2 flex-nowrap overflow-x-auto">{PRODUCTS.map(({ id, thumbnail, sold, trend, name }) => <li key={id}>
-                <Image src={thumbnail} alt={name} />
+                <ul className="w-full flex flex-row justify-start items-center gap-2 flex-nowrap overflow-x-auto">{PRODUCTS.map(({ id, thumbnail, sold, trend, name }) => <li key={id}>
+                    <Image src={thumbnail} alt={name} />
 
-                <p>{name}</p>
+                    <p>{name}</p>
 
-                <span>{sold}</span>
+                    <span>{sold}</span>
 
-                <span data-trend={trend}>
-                    <ArrowUpIcon />
-                </span>
-            </li>)}</ul>
+                    <span data-trend={trend}>
+                        <ArrowUpIcon />
+                    </span>
+                </li>)}</ul>
+            </section>
         </section>
     </Fragment>;
 }

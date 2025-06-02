@@ -18,6 +18,11 @@ import {
     FaUsers
 } from "react-icons/fa";
 
+import { 
+    FaArrowTrendDown,
+    FaArrowTrendUp 
+} from "react-icons/fa6";
+
 import {
     IoIosLogOut, 
     IoMdAdd,
@@ -25,7 +30,8 @@ import {
 } from "react-icons/io";
 
 import {
-    IoDocumentTextOutline
+    IoDocumentTextOutline,
+    IoShapesOutline
 } from "react-icons/io5";
 
 import { 
@@ -61,8 +67,11 @@ const Icons = {
     MegaphoneIcon: RiMegaphoneLine,
     ReportIcon: IoDocumentTextOutline,
     SettingsIcon: FaCog,
+    ShapesIcon: IoShapesOutline,
     ShieldIcon: BsShieldLock,
     StoreIcon: FaStore,
+    TrendArrowDownIcon: FaArrowTrendDown,
+    TrendArrowUpIcon: FaArrowTrendUp,
     UserIcon: FaRegUserCircle,
     UsersIcon: FaUsers
 };

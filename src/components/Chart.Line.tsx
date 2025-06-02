@@ -20,7 +20,9 @@ const data = {
 };
 
 const LineChart = () => {
-    return (<Line data={data} />);
+    return (<Line data={data} options={{
+        maintainAspectRatio: false
+    }} />);
 };
 
 export default LineChart;
