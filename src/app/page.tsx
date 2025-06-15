@@ -7,7 +7,6 @@ import { PRODUCTS, VISITATIONS } from "@/constants";
 import LuandaMap from "pub/images/map.png";
 import LineChart from "@/components/Chart.Line";
 // import DoughnutChart from "@/components/Chart.Doughnut";
-import { formatNumber } from "chart.js/helpers";
 
 export const metadata: Metadata = {
     title: `Home | ${process.env.APP_NAME}`,
@@ -26,10 +25,10 @@ export default function Home() {
     } = Icons;
 
     const KPIS = [
-        { id: "sales", title: "Vendas", value: 1200, tendency: 9, },
-        { id: "visits", title: "Visitas concluidas", value: 454, tendency: 9, },
-        { id: "increase", title: "Aumentos", value: 235, tendency: 9, },
-        { id: "products", title: "Produtos", value: 432123, tendency: 9, },
+        { id: "sales", title: "Equipas em campo hoje", value: 324, tendency: -3, },
+        { id: "visits", title: "Pontos de venda ativos", value: 454, tendency: 10, },
+        { id: "increase", title: "Nível médio de stock", value: 10, tendency: 3, },
+        { id: "products", title: "Campanhas ativas", value: 2, tendency: 0, },
     ];
 
     const VISIT_STATS = [
@@ -45,7 +44,7 @@ export default function Home() {
                     <div data-section="header">
                         <span data-text="title">{title}</span>
 
-                        <span data-text="value">{formatNumber(value, "pt-ao", { currency: "akz" })}</span>
+                        <span data-text="value">{value}</span>
 
                         <div data-element="icon">
                             <ShapesIcon />
@@ -53,17 +52,17 @@ export default function Home() {
                     </div>
 
                     <div data-section="desc">
-                        <span data-tendency={tendency > 0 ? "up" : "down"}>
+                        {(tendency !== 0) && <span data-tendency={tendency > 0 ? "up" : "down"}>
                             {tendency > 0 ? <TrendArrowUpIcon /> : <TrendArrowDownIcon />}
-                        </span>
+                        </span>}
 
-                        <span>
+                        {(tendency !== 0) && <span>
                             {tendency}%
 
                             <span className="mx-1">{tendency > 0 ? "Aumentou" : "Diminuiu"}</span>
 
                             desde ontem
-                        </span>
+                        </span>}
                     </div>
                 </li>)}
             </ul>

@@ -553,7 +553,7 @@ table thead th {
 }
 
 #kpis li span[data-text="value"] {
-    @apply text-4xl font-extrabold;
+    @apply text-3xl font-extrabold;
     grid-area: value;
 }
 
@@ -575,7 +575,7 @@ table thead th {
 }
 
 #kpis li div[data-section="header"] {
-    --size: 70px;
+    --size: 50px;
 
     width: 100%;
     display: grid;
@@ -620,7 +620,8 @@ table thead th {
     width: 100%;
     position: relative;
     grid-area: line;
-    height: 300px
+    min-height: 300px;
+    max-height: 500px;
 }
 
 #line canvas {
@@ -913,8 +914,13 @@ table thead th {
     }
 
     main {
+        align-items: center;
         --padding-margin: var(--container-padding);
         padding: var(--global-gap);
+    }
+
+    main > section {
+        max-width: 1300px;
     }
 
     h1,

@@ -36,7 +36,8 @@ import {
 
 import { 
     MdDarkMode,
-    MdLightMode 
+    MdLightMode,
+    MdOutlinePointOfSale  
 } from "react-icons/md";
 
 import {
@@ -48,6 +49,10 @@ import {
 import {
     RxDashboard
 } from "react-icons/rx";
+
+import { 
+    TiPointOfInterest 
+} from "react-icons/ti";
 
 const Icons = {
     AddIcon: IoMdAdd,
@@ -65,6 +70,8 @@ const Icons = {
     LoadingIcon: AiOutlineLoading3Quarters,
     LogoutIcon: IoIosLogOut,
     MegaphoneIcon: RiMegaphoneLine,
+    PointOfSaleIcon: MdOutlinePointOfSale,
+    PointOfInterestIcon: TiPointOfInterest,
     ReportIcon: IoDocumentTextOutline,
     SettingsIcon: FaCog,
     ShapesIcon: IoShapesOutline,
