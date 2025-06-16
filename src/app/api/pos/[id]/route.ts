@@ -1,8 +1,11 @@
 import { POS } from '@/constants';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-    const { id } = params;
+type Params = { id: string };
+
+export async function GET(request: NextRequest, segmentData: { params: Params }) {
+    const params = await segmentData.params;
+    const id = params.id;
 
     try {
         return NextResponse.json({
