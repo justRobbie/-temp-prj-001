@@ -1,9 +1,12 @@
 import { Metadata } from "next";
 import { Fragment } from "react";
 import Icons from "../icons";
-import POS from "@/components/POS";
+import POS from "./POS";
 import { POSType } from "@/constants";
 import { APIResponseType } from "@/types";
+
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
     title: `Pontos de venda | ${process.env.APP_NAME}`,
@@ -11,7 +14,19 @@ export const metadata: Metadata = {
 };
 
 export default async function PointsOfSale() {
-    const { data: fetchedPOS } = (await (await fetch(`${process.env.API_URL}/pos`)).json()) as APIResponseType<POSType[]>;
+    let fetchedPOS: POSType[] = [];
+    
+    try {
+        const data = await fetch(`${process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000/api"}/pos`);
+        if (data.ok) {
+            const response = ((await data.json()) as APIResponseType<POSType[]>);
+            fetchedPOS = response.data ?? [];
+        }
+    } catch (error) {
+        console.error('Failed to fetch POS data during build:', error);
+        // Fallback to empty array or default data
+        fetchedPOS = [];
+    }
 
     const {
         PointOfSaleIcon
@@ -26,7 +41,7 @@ export default async function PointsOfSale() {
                     <PointOfSaleIcon />
                 </header>
 
-                <POS defaultList={fetchedPOS ?? []} className="w-full flex flex-col justify-start items-start gap-2"/>
+                <POS defaultList={fetchedPOS} className="w-full flex flex-col justify-start items-start gap-2"/>
             </section>
         </Fragment>
     );

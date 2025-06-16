@@ -1,7 +1,7 @@
 "use client"
 
 import Icons from "@/app/icons"
-import DynamicTable from "./DynamicTable";
+import DynamicTable from "../../components/DynamicTable";
 import { DEFAULT_COMPONENT_STATE, POSType } from "@/constants";
 import { HTMLAttributes, useEffect, useState, useRef, useMemo } from "react";
 import { ComponentStateType, Province, StoreType } from "@/types";
