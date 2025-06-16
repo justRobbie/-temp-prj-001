@@ -10,6 +10,7 @@ section[data-component="POS"] form[data-toggled="false"] {
     --height: 0px;
 
     border-width: 0px;
+    padding: 0px;
     opacity: 0;
     height: var(--height);
     min-height: var(--height);
