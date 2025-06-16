@@ -1,7 +1,7 @@
 import { POS } from '@/constants';
 import { NextRequest, NextResponse } from 'next/server';
 
-type Params = { id: string };
+type Params = Promise<{ id: string }>;
 
 export async function GET(request: NextRequest, segmentData: { params: Params }) {
     const params = await segmentData.params;
