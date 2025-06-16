@@ -4,6 +4,7 @@ import ChipsAhoyImg from "pub/images/chips.jpg";
 import AlimoOilImg from "pub/images/oil.jpg";
 import TunaCanImg from "pub/images/tuna.jpg";
 import LaysImg from "pub/images/lays.jpg";
+import { ComponentStateType, Province, StoreType, WithId } from "./types";
 
 export const CAMPAIGNS = [
     {
@@ -48,4 +49,40 @@ export const USERS = [
     { id: 7, "nome": "Alberto Gomes", "e-mail": "alberto.gomes@executa.ao", "tipo": "Gestor" },
     { id: 8, "nome": "Giza Ramos", "e-mail": "giza.ramos@executa.ao", "tipo": "Gestor" },
     { id: 9, "nome": "Milena Milena", "e-mail": "mm.promove@executa.ao", "tipo": "Promotor" },
-]
+];
+
+export type POSType = WithId<{
+    "referência": `POS-${number}`, 
+    "província": Province, 
+    "município": string, 
+    "localização (lat:lng)": `${number}:${number}`, 
+    "tipo": StoreType
+}>;
+
+export const POS: POSType[] = [
+    { "id": 21, "referência": `POS-432547654153`, "província": "Luanda", "município": "Viana", "localização (lat:lng)": "-8.1432:13.2342", "tipo": "loja" },
+    { "id": 22, "referência": "POS-432547654154", "província": "Luanda", "município": "Belas", "localização (lat:lng)": "-8.9052:13.1842", "tipo": "loja" },
+    { "id": 23, "referência": "POS-432547654155", "província": "Benguela", "município": "Lobito", "localização (lat:lng)": "-12.3523:13.5445", "tipo": "mercado" },
+    { "id": 24, "referência": "POS-432547654156", "província": "Huíla", "município": "Lubango", "localização (lat:lng)": "-14.9120:13.4973", "tipo": "supermercado" },
+    { "id": 25, "referência": "POS-432547654157", "província": "Namibe", "município": "Moçâmedes", "localização (lat:lng)": "-15.1923:12.1465", "tipo": "loja" },
+    { "id": 26, "referência": "POS-432547654158", "província": "Luanda", "município": "Cacuaco", "localização (lat:lng)": "-8.7432:13.1543", "tipo": "quiosque" },
+    { "id": 27, "referência": "POS-432547654159", "província": "Bengo", "município": "Dande", "localização (lat:lng)": "-9.3214:13.4275", "tipo": "loja" },
+    { "id": 28, "referência": "POS-432547654160", "província": "Uíge", "município": "Uíge", "localização (lat:lng)": "-7.6124:15.0456", "tipo": "mercado" },
+    { "id": 29, "referência": "POS-432547654161", "província": "Lunda Norte", "município": "Dundo", "localização (lat:lng)": "-7.3874:20.7823", "tipo": "supermercado" },
+    { "id": 30, "referência": "POS-432547654162", "província": "Zaire", "município": "Mbanza Kongo", "localização (lat:lng)": "-6.2674:14.2452", "tipo": "loja" },
+    { "id": 31, "referência": "POS-432547654163", "província": "Malanje", "município": "Malanje", "localização (lat:lng)": "-9.5452:16.3452", "tipo": "quiosque" },
+    { "id": 32, "referência": "POS-432547654164", "província": "Huambo", "município": "Cuima", "localização (lat:lng)": "-12.7842:15.9642", "tipo": "loja" },
+    { "id": 33, "referência": "POS-432547654165", "província": "Cunene", "município": "Ondjiva", "localização (lat:lng)": "-17.0632:15.1342", "tipo": "mercado" },
+    { "id": 34, "referência": "POS-432547654166", "província": "Moxico", "município": "Luena", "localização (lat:lng)": "-11.7832:19.8962", "tipo": "supermercado" },
+    { "id": 35, "referência": "POS-432547654167", "província": "Cuando Cubango", "município": "Menongue", "localização (lat:lng)": "-14.6605:17.6823", "tipo": "loja" },
+    { "id": 36, "referência": "POS-432547654168", "província": "Benguela", "município": "Lobito", "localização (lat:lng)": "-12.5523:13.4678", "tipo": "supermercado" },
+    { "id": 37, "referência": "POS-432547654169", "província": "Huambo", "município": "Caála", "localização (lat:lng)": "-12.8896:15.9241", "tipo": "mercado" },
+    { "id": 38, "referência": "POS-432547654170", "província": "Luanda", "município": "Icolo e Bengo", "localização (lat:lng)": "-9.1432:13.7632", "tipo": "loja" },
+    { "id": 39, "referência": "POS-432547654171", "província": "Bengo", "município": "Ambriz", "localização (lat:lng)": "-7.8923:13.9754", "tipo": "quiosque" },
+    { "id": 40, "referência": "POS-432547654172", "província": "Zaire", "município": "Soyo", "localização (lat:lng)": "-6.1324:12.3785", "tipo": "mercado" }
+];
+
+export const DEFAULT_COMPONENT_STATE: ComponentStateType<object> = {
+    data: null,
+    state: "idle"
+}

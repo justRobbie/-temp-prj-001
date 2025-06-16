@@ -1,0 +1,25 @@
+section[data-component="POS"] form {
+    @apply w-full flex flex-col justify-start items-start;
+    row-gap: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+section[data-component="POS"] form[data-toggled="false"] {
+    --height: 0px;
+
+    border-width: 0px;
+    opacity: 0;
+    height: var(--height);
+    min-height: var(--height);
+    max-height: var(--height);
+    overflow: hidden;
+}
+
+section[data-component="POS"] form fieldset,
+section[data-component="POS"] form label,
+section[data-component="POS"] form input,
+section[data-component="POS"] form select {
+    width: inherit;
+}

@@ -2,7 +2,6 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { HTMLAttributes, useEffect, useState } from "react";
-import { COMP_FOOTER_LINKS } from "./components.global";
 import Link from "next/link";
 import Icons from "@/app/icons";
 
@@ -52,21 +51,9 @@ const LayoutNavigator = (props: HTMLAttributes<HTMLElement>) => {
 
     return <nav {...props}>
         <h1 className="font-extrabold text-2xl mr-auto" data-state={loading ? "disabled" : ""}>
-            {["/", "/login"].includes(pathname)
-                ? process.env.NEXT_PUBLIC_APP_NAME
-
-                : <Link href={"/"} className="opacity-50 hover:opacity-100">
-                    {process.env.NEXT_PUBLIC_APP_NAME}
-                </Link>
-            }
-
-            {["/", "/login"].includes(pathname) ? null : <>
-                <span className="opacity-15 mx-2">&gt;</span>
-
-                <span className="underline">
-                    {COMP_FOOTER_LINKS.find(({ link }) => link === pathname)?.name}
-                </span>
-            </>}
+            <Link href={"/"}>
+                {process.env.NEXT_PUBLIC_APP_NAME}
+            </Link>
         </h1>
 
         <button type="button" onClick={() => toggle(t => t === "dark" ? "light" : "dark")}>

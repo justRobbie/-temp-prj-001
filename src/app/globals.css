@@ -104,8 +104,31 @@ body:has(form[data-component="layout-form"][data-active="true"]) nav {
     opacity: 0.3;
 }
 
+input+button[data-styletype] {
+    border-left-width: 0px !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+}
+
+*:has(input+button[data-styletype]) input {
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+}
+
+a[data-styletype],
+button[data-styletype],
+input,
+select {
+    --height: 45px;
+
+    height: var(--height);
+    max-height: var(--height);
+    min-height: var(--height);
+}
+
 button,
-input {
+input,
+select {
     cursor: pointer;
 }
 
@@ -211,6 +234,20 @@ aside #navigation-links a svg {
     font-size: 1.2em;
 }
 
+div[data-state="error"] {
+    @apply w-full flex flex-row justify-center items-center gap-3; 
+    padding: 5px 2px;
+    border-radius: 10px;
+}
+
+[data-theme="light"] div[data-state="error"] {
+    @apply text-red-900 bg-red-100;
+}
+
+[data-theme="dark"] div[data-state="error"] {
+    @apply text-red-100 bg-red-900;
+}
+
 footer {
     z-index: 10;
     background-color: var(--background);
@@ -272,7 +309,8 @@ footer a[data-selected="true"] {
 
 aside a:hover,
 footer a:hover,
-input:hover {
+input:hover,
+select:hover {
     background-color: var(--hover-background);
 }
 
@@ -281,10 +319,11 @@ footer a span {
     font-size: 0.7em;
 }
 
-input {
+input,
+select {
     border: 1px solid var(--border-color);
     border-radius: 10px;
-    padding: 10px;
+    padding: 0px 10px;
 }
 
 h1 {
@@ -447,6 +486,11 @@ table th {
 
 table[data-component="dynamic-table"] {
     width: 100%;
+}
+
+table[data-component="dynamic-table"][data-state="loading"] tr * {
+    padding: 25px 0px;
+    background-color: var(--hover-background);
 }
 
 table thead th {
