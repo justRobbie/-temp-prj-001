@@ -2,12 +2,15 @@
 
 import Link from "next/link";
 import { COMP_FOOTER_LINKS } from "./components.global"
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { HTMLAttributes } from "react";
 import Icons from "@/app/icons";
+import { EBrandType } from "@/app";
 
 const LayoutAsideMenu = (props: HTMLAttributes<HTMLElement>) => {
     const pathname = usePathname();
+    const params = useParams<{ id: EBrandType }>();
+    const { id } = params;
 
     const {
         LinkIcon,
@@ -30,9 +33,9 @@ const LayoutAsideMenu = (props: HTMLAttributes<HTMLElement>) => {
 
     return <aside {...props}>
         <ul id="navigation-links">
-            {pathname !== "/login" && COMP_FOOTER_LINKS.map(({ id, name, link, icon }) =>
-                <li key={id}>
-                    <Link href={link} data-selected={link === pathname}>
+            {pathname !== "/login" && COMP_FOOTER_LINKS.map(({ id:i, name, link, icon }) =>
+                <li key={i}>
+                    <Link href={`/${id}${link}`} data-selected={(link === "/" ? `/${id}` : `/${id}${link}`) === pathname}>
                         {icon}
 
                         <span>{name}</span>

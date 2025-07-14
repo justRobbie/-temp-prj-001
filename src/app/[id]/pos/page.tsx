@@ -1,9 +1,10 @@
 import { Metadata } from "next";
 import { Fragment } from "react";
-import Icons from "../icons";
+import Icons from "../../icons";
 import POS from "./POS";
 import { POSType } from "@/constants";
 import { APIResponseType } from "@/types";
+import { EBrandType } from "@/app";
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -13,11 +14,13 @@ export const metadata: Metadata = {
     description: " Criação e gestão de pontos de venda personalizados para maximizar a cobertura de lojas.",
 };
 
-export default async function PointsOfSale() {
+export default async function PointsOfSale({ params }: { params: Promise<{ id: EBrandType }> }) {
+    const { id } = await params;
+
     let fetchedPOS: POSType[] = [];
     
     try {
-        const data = await fetch(`${process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000/api"}/pos`);
+        const data = await fetch(`${process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000/api"}/pos/${id}`);
         if (data.ok) {
             const response = ((await data.json()) as APIResponseType<POSType[]>);
             fetchedPOS = response.data ?? [];

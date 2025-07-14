@@ -1,16 +1,19 @@
 import { Metadata } from "next";
 import { Fragment } from "react";
-import Icons from "../icons";
+import Icons from "../../icons";
 import { CAMPAIGNS, PRODUCTS, VISITATIONS } from "@/constants";
 import DynamicTable from "@/components/DynamicTable";
 import Image from "next/image";
+import { EBrandType } from "@/app";
 
 export const metadata: Metadata = {
     title: `Campanhas de incentivo | ${process.env.APP_NAME}`,
     description: "Criação e gestão de programas de motivação e performance para promotores.",
 };
 
-export default function Campaigns() {
+export default async function Campaigns({ params }: { params: Promise<{ id: EBrandType }> }) {
+    const { id } = await params;
+
     const {
         AddIcon,
         ArrowUpIcon
@@ -25,7 +28,7 @@ export default function Campaigns() {
                     Criar campanha
                 </button>
 
-                {CAMPAIGNS.map(({ id, description, name, startDate, endDate, thumbnails }) => <section key={id} data-component="campaign">
+                {CAMPAIGNS[id].map(({ id: campaignId, description, name, startDate, endDate, thumbnails }) => <section key={campaignId} data-component="campaign">
                     <header style={{ backgroundImage: `url(${thumbnails[0].src})` }}></header>
 
                     <h1>{name}</h1>
@@ -47,7 +50,7 @@ export default function Campaigns() {
                     <section className="w-full">
                         <h2>Lojas</h2>
 
-                        <DynamicTable list={VISITATIONS} />
+                        <DynamicTable list={VISITATIONS[id]} />
                     </section>
 
                     <section id="products" className="w-full">
@@ -55,7 +58,7 @@ export default function Campaigns() {
                             Produtos
                         </h2>
 
-                        <ul className="w-full flex flex-row justify-start items-center gap-2 flex-nowrap overflow-x-auto">{PRODUCTS.map(({ id, thumbnail, sold, trend, name }) => <li key={id}>
+                        <ul className="w-full flex flex-row justify-start items-center gap-2 flex-nowrap overflow-x-auto">{PRODUCTS[id].map(({ id, thumbnail, sold, trend, name }) => <li key={id}>
                             <Image src={thumbnail} alt={name} />
 
                             <p>{name}</p>

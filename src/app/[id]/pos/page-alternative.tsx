@@ -1,15 +1,18 @@
 import { Metadata } from "next";
 import { Fragment } from "react";
-import Icons from "../icons";
+import Icons from "../../icons";
 import POS from "./POS";
 import { POS as POS_DATA } from "@/constants";
+import { EBrandType } from "@/app";
 
 export const metadata: Metadata = {
     title: `Pontos de venda | ${process.env.APP_NAME}`,
     description: " Criação e gestão de pontos de venda personalizados para maximizar a cobertura de lojas.",
 };
 
-export default function PointsOfSale() {
+export default async function PointsOfSale({ params }: { params: Promise<{ id: EBrandType }> }) {
+    const { id } = await params;
+
     const {
         PointOfSaleIcon
     } = Icons;
@@ -23,7 +26,7 @@ export default function PointsOfSale() {
                     <PointOfSaleIcon />
                 </header>
 
-                <POS defaultList={POS_DATA} className="w-full flex flex-col justify-start items-start gap-2"/>
+                <POS defaultList={POS_DATA[id]} className="w-full flex flex-col justify-start items-start gap-2"/>
             </section>
         </Fragment>
     );

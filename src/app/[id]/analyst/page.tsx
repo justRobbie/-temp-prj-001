@@ -1,3 +1,4 @@
+import { EBrandType } from "@/app";
 import { Metadata } from "next";
 import { Fragment } from "react";
 
@@ -6,10 +7,12 @@ export const metadata: Metadata = {
     description: "Ferramentas de reporting e dashboards para análise dos dados recolhidos.",
 };
 
-export default function Analyst() {
+export default async function Analyst({ params }: { params: Promise<{ id: EBrandType }> }) {
+    const { id } = await params;
+
     return (
         <Fragment>
-            AAAAAAAAAAAAA
+            AAAAAAAAAAAAA {id}
         </Fragment>
     );
 }

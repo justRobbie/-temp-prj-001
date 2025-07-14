@@ -235,7 +235,7 @@ aside #navigation-links a svg {
 }
 
 div[data-state="error"] {
-    @apply w-full flex flex-row justify-center items-center gap-3; 
+    @apply w-full flex flex-row justify-center items-center gap-3;
     padding: 5px 2px;
     border-radius: 10px;
 }
@@ -340,6 +340,10 @@ main {
     --padding-margin: calc(var(--container-padding) * 5);
     grid-area: main;
     overflow: auto;
+    padding-bottom: var(--py);
+    padding-top: var(--py);
+    padding-left: var(--px);
+    padding-right: var(--px);
 }
 
 main>section {
@@ -916,8 +920,10 @@ table thead th {
     }
 
     main {
+        --px: 150px;
+        --py: 20px;
+
         gap: 20px;
-        padding: 20px;
     }
 
     main>section:last-of-type {
@@ -963,7 +969,7 @@ table thead th {
         padding: var(--global-gap);
     }
 
-    main > section {
+    main>section {
         max-width: 1300px;
     }
 

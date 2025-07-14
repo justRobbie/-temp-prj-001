@@ -1,3 +1,4 @@
+import { EBrandType } from "@/app";
 import { Metadata } from "next";
 import { Fragment } from "react";
 
@@ -6,10 +7,12 @@ export const metadata: Metadata = {
     description: " Criação e gestão de roteiros personalizados para maximizar a cobertura de lojas.",
 };
 
-export default function Planner() {
+export default async function Planner({ params }: { params: Promise<{ id: EBrandType }> }) {
+    const { id } = await params;
+
     return (
         <Fragment>
-            PPPPPPPPPP
+            PPPPPPPPPP {id}
         </Fragment>
     );
 }

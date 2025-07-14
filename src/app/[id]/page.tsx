@@ -1,11 +1,12 @@
 import { Metadata } from "next";
 import { Fragment } from "react";
-import Icons from "./icons";
+import Icons from "../icons";
 import Image from "next/image";
 import DynamicTable from "@/components/DynamicTable";
 import { PRODUCTS, VISITATIONS } from "@/constants";
 import LuandaMap from "pub/images/map.png";
 import LineChart from "@/components/Chart.Line";
+import { EBrandType } from "@/app";
 // import DoughnutChart from "@/components/Chart.Doughnut";
 
 export const metadata: Metadata = {
@@ -13,7 +14,11 @@ export const metadata: Metadata = {
     description: "Onde a magia acontece.",
 };
 
-export default function Home() {
+export default async function Home({ params }: { params: Promise<{ id: EBrandType }> }) {
+    const { id } = await params;
+
+    console.log(id);
+    
     const {
         ArrowUpIcon,
         CloseIcon,
@@ -32,8 +37,8 @@ export default function Home() {
     ];
 
     const VISIT_STATS = [
-        { id: "stat-1", title: "Visitas feitas", value: VISITATIONS.reduce((a, b) => a + b["visitas"], 0), icon: <StoreIcon /> },
-        { id: "stat-2", title: "Ruturas identificadas", value: VISITATIONS.reduce((a, b) => a + b["ruturas"], 0), icon: <CloseIcon /> },
+        { id: "stat-1", title: "Visitas feitas", value: VISITATIONS[id].reduce((a, b) => a + b["visitas"], 0), icon: <StoreIcon /> },
+        { id: "stat-2", title: "Ruturas identificadas", value: VISITATIONS[id].reduce((a, b) => a + b["ruturas"], 0), icon: <CloseIcon /> },
         { id: "stat-3", title: "Fotos capturadas", value: 30, icon: <CameraIcon /> },
     ]
 
@@ -108,7 +113,7 @@ export default function Home() {
                     </li>)}</ul>
                 </header>
 
-                <DynamicTable list={VISITATIONS} />
+                <DynamicTable list={VISITATIONS[id]} />
             </section>
         </section>
 
@@ -118,7 +123,7 @@ export default function Home() {
                     Produtos mais populares
                 </h2>
 
-                <ul className="w-full flex flex-row justify-start items-center gap-2 flex-nowrap overflow-x-auto">{PRODUCTS.map(({ id, thumbnail, sold, trend, name }) => <li key={id}>
+                <ul className="w-full flex flex-row justify-start items-center gap-2 flex-nowrap overflow-x-auto">{PRODUCTS[id].map(({ id, thumbnail, sold, trend, name }) => <li key={id}>
                     <Image src={thumbnail} alt={name} />
 
                     <p>{name}</p>

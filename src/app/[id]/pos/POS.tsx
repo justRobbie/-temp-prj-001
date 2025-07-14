@@ -1,13 +1,13 @@
 "use client"
 
 import Icons from "@/app/icons"
-import DynamicTable from "../../components/DynamicTable";
+import DynamicTable from "../../../components/DynamicTable";
 import { DEFAULT_COMPONENT_STATE, POSType } from "@/constants";
-import { HTMLAttributes, useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef, useMemo, ComponentProps } from "react";
 import { ComponentStateType, Province, StoreType } from "@/types";
 import './POS.css';
 
-interface IPOSProps extends HTMLAttributes<HTMLElement> {
+interface IPOSProps extends ComponentProps<"section"> {
     defaultList: POSType[];
 }
 

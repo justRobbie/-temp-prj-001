@@ -20,7 +20,8 @@ import {
 
 import { 
     FaArrowTrendDown,
-    FaArrowTrendUp 
+    FaArrowTrendUp,
+    FaBuildingCircleCheck 
 } from "react-icons/fa6";
 
 import {
@@ -37,7 +38,8 @@ import {
 import { 
     MdDarkMode,
     MdLightMode,
-    MdOutlinePointOfSale  
+    MdOutlineInventory2,
+    MdOutlinePointOfSale,
 } from "react-icons/md";
 
 import {
@@ -59,12 +61,14 @@ const Icons = {
     ArrowUpIcon: FaArrowUp,
     Calendar1Icon: RiCalendarTodoLine,
     CameraIcon: FaCamera,
+    CheckInIcon: FaBuildingCircleCheck,
     CloseIcon: IoMdClose,
     DarkModeIcon: MdDarkMode,
     DashboardIcon: RxDashboard,
     EyeIcon: FaRegEye,
     EyeSlashIcon: FaRegEyeSlash,
     HomeIcon: FaHome,
+    InventoryIcon: MdOutlineInventory2,
     LightModeIcon: MdLightMode,
     LinkIcon: RiLink,
     LoadingIcon: AiOutlineLoading3Quarters,

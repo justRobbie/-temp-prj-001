@@ -2,22 +2,25 @@ import DynamicTable from "@/components/DynamicTable";
 import { USERS, VISITATIONS } from "@/constants";
 import { Metadata } from "next";
 import { Fragment } from "react";
-import Icons from "../icons";
+import Icons from "../../icons";
 import Man$1ProfilePhoto from "pub/images/man-1.jpg";
+import { EBrandType } from "@/app";
 
 export const metadata: Metadata = {
     title: `Manager | ${process.env.APP_NAME}`,
     description: "Permite o acompanhamento das atividades diárias dos promotores e supervisores.",
 };
 
-export default function Manager() {
+export default async function Manager({ params }: { params: Promise<{ id: EBrandType }> }) {
+    const { id } = await params;
+
     const {
         AddIcon,
         CameraIcon,
         StoreIcon
     } = Icons;
 
-    const PROMOTERS = USERS.filter(({ tipo }) => tipo === "Promotor").map(user => {
+    const PROMOTERS = USERS[id].filter(({ tipo }) => tipo === "Promotor").map(user => {
         return {
             ...user,
             thumbnail: Man$1ProfilePhoto
@@ -25,7 +28,7 @@ export default function Manager() {
     });
 
     const PROMOTERS_STATS = [
-        { id: "stat-1", title: "Produtos promovidos", value: VISITATIONS.length, icon: <StoreIcon /> },
+        { id: "stat-1", title: "Produtos promovidos", value: VISITATIONS[id].length, icon: <StoreIcon /> },
         { id: "stat-2", title: "Fotos capturadas", value: 30, icon: <CameraIcon /> },
     ];
 
@@ -41,7 +44,7 @@ export default function Manager() {
                         Adicionar utilizador
                     </button>
 
-                    <DynamicTable list={USERS} className="w-full" />
+                    <DynamicTable list={USERS[id]} className="w-full" />
                 </section>
             </section>
 

@@ -31,3 +31,10 @@ export type ComponentStateType<D, C="idle"> = {
     state: "loading" | "success" | "idle" | "error" | C,
     data: D | Error | null;
 }
+
+export type KPIType = { 
+    id: string, 
+    title: string, 
+    value: number, 
+    tendency: number 
+};
