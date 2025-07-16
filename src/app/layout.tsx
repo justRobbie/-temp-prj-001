@@ -5,6 +5,7 @@ import LayoutFooterMenu from "@/components/Footer.Layout";
 import LayoutAsideMenu from "@/components/Aside.Layout";
 import LayoutNavigator from "@/components/Nav.Layout";
 import LayoutForm from "@/components/Form.Layout";
+import BrandsMenuDialog from "@/components/Dialog.BrandsMenu";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -31,6 +32,8 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
+                <BrandsMenuDialog />
+
                 <LayoutAsideMenu className="h-full" />
 
                 <LayoutNavigator />

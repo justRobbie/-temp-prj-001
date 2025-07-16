@@ -1,5 +1,5 @@
 import DynamicTable from "@/components/DynamicTable";
-import { USERS, VISITATIONS } from "@/constants";
+import { USERS, VISITATIONS } from "@/mock";
 import { Metadata } from "next";
 import { Fragment } from "react";
 import Icons from "../../icons";

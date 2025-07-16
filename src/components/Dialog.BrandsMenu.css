@@ -1,0 +1,114 @@
+dialog[data-component="BrandsMenuDialog"] {
+    --h: 100%;
+    --w: 95%;
+    --col: 150px;
+    --g: 10px;
+    --xpos: -40%;
+
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    background-color: transparent;
+    overflow: auto;
+    z-index: 5000;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, var(--xpos));
+    /* height: var(--h);
+    max-height: var(--h);
+    min-height: var(--h); */
+    /* width: var(--w);
+    max-width: var(--w);
+    min-width: var(--w); */
+    border-radius: var(--g);
+    gap: var(--g);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, transform 1s ease-in-out;
+}
+
+dialog[data-component="BrandsMenuDialog"][open] {
+    --xpos: -50%;
+    pointer-events: all;
+    opacity: 1;
+}
+
+dialog[data-component="BrandsMenuDialog"]::backdrop {
+    opacity: 0.5;
+    background-color: black;
+}
+
+dialog[data-component="BrandsMenuDialog"] a {
+    @apply flex flex-col justify-center items-center;
+    row-gap: var(--g);
+    overflow: hidden;
+}
+
+dialog[data-component="BrandsMenuDialog"] a[data-selected="true"] {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+dialog[data-component="BrandsMenuDialog"] a img {
+    --s: var(--col);
+
+    border-radius: 10px;
+    height: var(--s);
+    min-height: var(--s);
+    max-height: var(--s);
+    width: var(--s);
+    min-width: var(--s);
+    max-width: var(--s);
+}
+
+dialog[data-component="BrandsMenuDialog"] a span {
+    --h: calc(3 * var(--g));
+
+    height: var(--h);
+    max-height: var(--h);
+    min-height: var(--h);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+dialog[data-component="BrandsMenuDialog"] a:hover span {
+    text-decoration: underline;
+}
+
+[data-theme="dark"] dialog[data-component="BrandsMenuDialog"] a span {
+    color: white;
+}
+
+
+@media only screen and (max-width: 499px) {
+    dialog[data-component="BrandsMenuDialog"] {
+        --col: 90px;
+    }
+}
+
+@media only screen and (min-width: 500px) {}
+
+@media only screen and (max-width: 699px) {
+    dialog[data-component="BrandsMenuDialog"] {
+        grid-template-columns: repeat(2, var(--col));
+        grid-template-rows: repeat(4, calc(var(--col) + calc(4 * var(--g))));
+    }
+}
+
+@media only screen and (min-width: 700px) {
+    dialog[data-component="BrandsMenuDialog"] {
+        grid-template-columns: repeat(4, var(--col));
+        grid-template-rows: repeat(2, calc(var(--col) + calc(4 * var(--g))));
+    }
+}
+
+@media only screen and (max-width: 1080px) {}
+
+@media only screen and (min-width: 1081px) {}
+
+@media only screen and (max-width: 1499px) {}
+
+@media only screen and (min-width: 1500px) {}

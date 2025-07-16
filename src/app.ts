@@ -1,3 +1,13 @@
+import { StaticImageData } from "next/image";
+import AngoMartImg from "pub/images/angomart.webp";
+import CandandoImg from "pub/images/candando.webp";
+import CasaDosFrescosImg from "pub/images/casa_dos_frescos.webp";
+import DeskontaoImg from "pub/images/deskontão.webp";
+import IntermarketImg from "pub/images/intermarket.webp";
+import KEROImg from "pub/images/kero.webp";
+import MAXIImg from "pub/images/maxi.webp";
+import ShopriteImg from "pub/images/shoprite.webp";
+
 export enum EProvince {
     Luanda = "Luanda",
     LundaNorte = "Lunda Norte",
@@ -17,6 +27,30 @@ export enum EProvince {
     CuanzaSul = "Cuanza Sul",
     CuanzaNorte = "Cuanza Norte",
     Bengo = "Bengo"
+};
+
+export enum EBrandType {
+    Kero = "Kero",
+    MAXI = "MAXI",
+    CANDANDO = "CANDANDO",
+    Shoprite = "Shoprite",
+    CasaDosFrescos = "CasadosFrescos",
+    Intermarket = "Intermarket",
+    Deskontao = "Deskontao",
+    Angomart = "Angomart"
+};
+
+export type StoreType = {
+    id: number;
+    name: string;
+    brand: EBrandType;
+    location: {
+        latitude: number;
+        longitude: number;
+    };
+    province: EProvince;
+    thumbnail?: StaticImageData;
+    municipality: string[];
 }
 
 export const Municipalities = new Map([
@@ -32,51 +66,37 @@ export const Municipalities = new Map([
     ["Zaire", ["Mbanza Kongo"]]
 ]);
 
-export enum EBrandType {
-    Kero = "Kero",
-    MAXI = "MAXI",
-    CANDANDO = "CANDANDO",
-    Shoprite = "Shoprite",
-    CasaDosFrescos = "Casa dos Frescos",
-    Intermarket = "Intermarket",
-    Deskontao = "Deskontão",
-    Angomart = "Angomart"
-};
-
-export type StoreType = {
-    id: number;
-    name: string;
-    brand: EBrandType;
-    location: {
-        latitude: number;
-        longitude: number;
-    };
-    province: EProvince;
-    municipality: string[];
-}
+export const Thumbnails = new Map([
+    [EBrandType.Angomart, AngoMartImg],
+    [EBrandType.CANDANDO, CandandoImg],
+    [EBrandType.CasaDosFrescos, CasaDosFrescosImg],
+    [EBrandType.Deskontao, DeskontaoImg],
+    [EBrandType.Intermarket, IntermarketImg],
+    [EBrandType.Kero, KEROImg],
+    [EBrandType.MAXI, MAXIImg],
+    [EBrandType.Shoprite, ShopriteImg],
+]);
 
 class Application {
     stores: StoreType[] = [];
 
     constructor() {
         this.init();
-        
-        // Initialize stores with some dummy data
-        this.stores.push(...Object.values(EBrandType).map((brand, index) => ({
-            id: index,
-            name: brand,
-            brand,
-            location: {
-                latitude: 0,
-                longitude: 0
-            },
-            province: EProvince.Luanda,
-            municipality: Municipalities.get(brand) || []
-        })));
     }
 
     init() {
         console.log("Application initialized");
+
+        // Initialize stores with some dummy data
+        this.stores.push(...Object.values(EBrandType).map((brand, index) => ({
+            id: index, 
+            name: brand, 
+            brand, 
+            location: { latitude: 0, longitude: 0 }, 
+            province: EProvince.Luanda, 
+            thumbnail: Thumbnails.get(brand),
+            municipality: Municipalities.get(brand) || []
+        })));
     };
 
     getStore (id: number) {

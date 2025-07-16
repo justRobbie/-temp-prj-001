@@ -2,7 +2,8 @@
 
 import Icons from "@/app/icons"
 import DynamicTable from "../../../components/DynamicTable";
-import { DEFAULT_COMPONENT_STATE, POSType } from "@/constants";
+import { DEFAULT_COMPONENT_STATE } from "@/constants";
+import { POSType } from "@/mock";
 import { useEffect, useState, useRef, useMemo, ComponentProps } from "react";
 import { ComponentStateType, Province, StoreType } from "@/types";
 import './POS.css';

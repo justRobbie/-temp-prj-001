@@ -3,12 +3,7 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Icons from '../icons'
-// import { Metadata } from 'next'
-
-// export const metadata: Metadata = {
-//     title: `Login | ${process.env.APP_NAME}`,
-//     description: "Bem vindo/a ao EXECUTA, a plataforma de Trade Marketing que otimiza a execução das operações no ponto de venda (PDV).",
-// };
+import { BrandsMenuDialog$STORAGE_ALIAS } from '@/constants';
 
 export default function Login() {
     const [seePassword, setSeePassword] = useState(false);
@@ -24,7 +19,7 @@ export default function Login() {
         ShieldIcon
     } = Icons;
 
-    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    async function POST(event: FormEvent<HTMLFormElement>) {
         setLoading(true);
 
         event.preventDefault()
@@ -39,8 +34,12 @@ export default function Login() {
             body: JSON.stringify({ email, password }),
         })
 
+        const lastUsedBrand = localStorage.getItem(BrandsMenuDialog$STORAGE_ALIAS);
+
         if (response.ok) {
-            router.push('/1')
+            if (lastUsedBrand) router.push(`/${lastUsedBrand}`);
+
+            else router.push(`/choose`);
         } else {
             setError(new Error('Credenciais inválidas.'))
             setLoading(false)
@@ -57,7 +56,7 @@ export default function Login() {
         }
     }, [])
 
-    return <form id="login-form" onSubmit={handleSubmit}>
+    return <form id="login-form" onSubmit={POST}>
         <section data-styletype={!error ? "primary" : "danger"}>
             <ShieldIcon className='text-7xl' />
 

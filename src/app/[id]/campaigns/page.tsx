@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { Fragment } from "react";
 import Icons from "../../icons";
-import { CAMPAIGNS, PRODUCTS, VISITATIONS } from "@/constants";
+import { CAMPAIGNS, PRODUCTS, VISITATIONS } from "@/mock";
 import DynamicTable from "@/components/DynamicTable";
 import Image from "next/image";
 import { EBrandType } from "@/app";

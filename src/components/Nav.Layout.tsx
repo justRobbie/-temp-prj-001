@@ -1,9 +1,12 @@
 "use client"
 
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { HTMLAttributes, useEffect, useState } from "react";
 import Link from "next/link";
 import Icons from "@/app/icons";
+import { EBrandType, Thumbnails } from "@/app";
+import Image, { StaticImageData } from "next/image";
+import { BrandsMenuCloseEvent } from "./Dialog.BrandsMenu";
 
 type themeType = "light" | "dark";
 
@@ -19,6 +22,18 @@ const LayoutNavigator = (props: HTMLAttributes<HTMLElement>) => {
     const [loading, setLoading] = useState(false);
     const [theme, toggle] = useState<themeType>("light");
     const pathname = usePathname();
+    const params = useParams<{ id: EBrandType }>();
+    const { id } = params;
+
+    function openBrandDialog() {
+        const $dialog = document.querySelector("dialog[data-component='BrandsMenuDialog']") as HTMLDialogElement;
+
+        if (!$dialog) return;
+
+        $dialog.addEventListener('mousedown', BrandsMenuCloseEvent);
+
+        $dialog.showModal();
+    }
 
     async function logout() {
         setLoading(true);
@@ -55,6 +70,12 @@ const LayoutNavigator = (props: HTMLAttributes<HTMLElement>) => {
                 {process.env.NEXT_PUBLIC_APP_NAME}
             </Link>
         </h1>
+
+        <button type="button" data-styletype="brand" onClick={openBrandDialog}>
+            <Image src={Thumbnails.get(id) as StaticImageData} alt={`${id}'s logo`} />
+
+            <span>{id}</span>
+        </button>
 
         <button type="button" onClick={() => toggle(t => t === "dark" ? "light" : "dark")}>
             {theme === "dark" && <LightModeIcon />}

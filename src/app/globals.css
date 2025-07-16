@@ -88,28 +88,6 @@
     opacity: 0.5;
 }
 
-body {
-    display: grid;
-    height: 100vh;
-    width: 100%;
-    background: var(--background);
-    color: var(--default-text-color);
-    font-family: Arial, Helvetica, sans-serif;
-    grid-template-rows: auto 1fr;
-}
-
-body:has(form[data-component="layout-form"][data-active="true"]) main,
-body:has(form[data-component="layout-form"][data-active="true"]) nav {
-    pointer-events: none;
-    opacity: 0.3;
-}
-
-input+button[data-styletype] {
-    border-left-width: 0px !important;
-    border-top-left-radius: 0px !important;
-    border-bottom-left-radius: 0px !important;
-}
-
 *:has(input+button[data-styletype]) input {
     border-top-right-radius: 0px !important;
     border-bottom-right-radius: 0px !important;
@@ -132,12 +110,8 @@ select {
     cursor: pointer;
 }
 
-form[data-component="layout-form"][data-active="true"] {
-    padding: var(--container-padding);
-}
-
 aside,
-footer,
+body > footer,
 form[data-component="layout-form"],
 main>section,
 #login-form section {
@@ -234,6 +208,80 @@ aside #navigation-links a svg {
     font-size: 1.2em;
 }
 
+body {
+    position: relative;
+    display: grid;
+    height: 100vh;
+    width: 100%;
+    background: var(--background);
+    color: var(--default-text-color);
+    font-family: Arial, Helvetica, sans-serif;
+    grid-template-rows: auto 1fr;
+    transition: filter 0.7s ease-in-out;
+}
+
+body:has(dialog[open]) {
+    --filter: 5px;
+
+    -moz-filter: blur(var(--filter));
+    -webkit-filter: blur(var(--filter));
+    filter: blur(var(--filter));
+}
+
+body:has(form[data-component="layout-form"][data-active="true"]) main,
+body:has(form[data-component="layout-form"][data-active="true"]) nav {
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+body > footer {
+    background-color: var(--background-footer);
+    z-index: 10;
+    background-color: var(--background);
+    position: fixed;
+    top: 100%;
+    width: 100%;
+    transform: translate(0px, -100%);
+    border-top-width: 1px;
+}
+
+body > footer a {
+    @apply flex items-center gap-2;
+    width: 100%;
+    padding: 10px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+body > footer a[data-selected="true"] {
+    border-top: 3px solid var(--select-highlight);
+    background-color: var(--menu-select-background);
+}
+
+body > footer a span {
+    @apply font-bold;
+    font-size: 0.7em;
+}
+
+button[data-styletype="brand"] {
+    @apply flex flex-row justify-center items-center;
+    column-gap: 20px;
+    padding: 5px;
+    padding-right: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+button[data-styletype="brand"] img {
+    border-radius: 5px;
+    height: 100%;
+    width: 100%;
+}
+
+button[data-styletype="brand"] span {
+    @apply font-bold;
+}
+
 div[data-state="error"] {
     @apply w-full flex flex-row justify-center items-center gap-3;
     padding: 5px 2px;
@@ -248,20 +296,8 @@ div[data-state="error"] {
     @apply text-red-100 bg-red-900;
 }
 
-footer {
-    z-index: 10;
-    background-color: var(--background);
-    position: fixed;
-    top: 100%;
-    width: 100%;
-    transform: translate(0px, -100%);
-    border-top-width: 1px;
-}
-
-footer a {
-    @apply flex items-center gap-2;
-    width: 100%;
-    padding: 10px;
+form[data-component="layout-form"][data-active="true"] {
+    padding: var(--container-padding);
 }
 
 form[data-component="layout-form"] {
@@ -293,30 +329,11 @@ fieldset {
     gap: 10px;
 }
 
-footer {
-    background-color: var(--background-footer);
-}
-
-footer a {
-    flex-direction: column;
-    justify-content: center;
-}
-
-footer a[data-selected="true"] {
-    border-top: 3px solid var(--select-highlight);
-    background-color: var(--menu-select-background);
-}
-
 aside a:hover,
-footer a:hover,
+body > footer a:hover,
 input:hover,
 select:hover {
     background-color: var(--hover-background);
-}
-
-footer a span {
-    @apply font-bold;
-    font-size: 0.7em;
 }
 
 input,
@@ -324,6 +341,12 @@ select {
     border: 1px solid var(--border-color);
     border-radius: 10px;
     padding: 0px 10px;
+}
+
+input+button[data-styletype] {
+    border-left-width: 0px !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
 }
 
 h1 {
@@ -537,6 +560,19 @@ table thead th {
 
 #quick-links ul {
     @apply flex flex-row items-center justify-start gap-2;
+    -ms-overflow-style: none;
+    /* Hides scrollbar in IE and Edge */
+    -moz-overflow-style: none;
+    /* Hides scrollbar in IE and Edge */
+    -webkit-overflow-style: none;
+    /* Hides scrollbar in IE and Edge */
+    scrollbar-width: none;
+    /* Hides scrollbar in Firefox */
+}
+
+#quick-links ul::-webkit-scrollbar {
+    display: none;
+    /* Hides scrollbar in Chrome, Safari, Opera */
 }
 
 #quick-links ul li {
@@ -573,15 +609,35 @@ table thead th {
 }
 
 #kpis {
+    @apply flex flex-row justify-start items-center flex-nowrap w-full;
+    overflow: hidden;
+    grid-area: kpis;
+}
+
+#kpis ul {
     @apply flex flex-row justify-start items-center flex-nowrap;
     width: 100%;
     max-width: 100%;
-    overflow: auto;
-    grid-area: kpis;
+    overflow-x: auto;
+    overflow-y: hidden;
     gap: 20px;
+    -ms-overflow-style: none;
+    /* Hides scrollbar in IE and Edge */
+    -moz-overflow-style: none;
+    /* Hides scrollbar in IE and Edge */
+    -webkit-overflow-style: none;
+    /* Hides scrollbar in IE and Edge */
+    scrollbar-width: none;
+    /* Hides scrollbar in Firefox */
 }
 
-#kpis li {
+#kpis ul::-webkit-scrollbar {
+    display: none;
+    /* Hides scrollbar in Chrome, Safari, Opera */
+}
+
+
+#kpis ul li {
     --height: 150px;
 
     @apply flex flex-col justify-start items-start gap-2;
@@ -594,18 +650,18 @@ table thead th {
     background-color: var(--background-kpi-item);
 }
 
-#kpis li span[data-text="title"] {
+#kpis ul li span[data-text="title"] {
     @apply font-bold;
     opacity: 0.5;
     grid-area: title;
 }
 
-#kpis li span[data-text="value"] {
+#kpis ul li span[data-text="value"] {
     @apply text-3xl font-extrabold;
     grid-area: value;
 }
 
-#kpis li div[data-element="icon"] {
+#kpis ul li div[data-element="icon"] {
     @apply flex flex-col justify-center items-center;
     grid-area: icon;
     background-color: var(--background-kpi-icon);
@@ -614,7 +670,7 @@ table thead th {
     width: var(--size);
 }
 
-#kpis li div[data-element="icon"] svg {
+#kpis ul li div[data-element="icon"] svg {
     --icon-size: calc(var(--size) - 20px);
 
     color: var(--text-kpi-icon);
@@ -622,7 +678,7 @@ table thead th {
     width: var(--icon-size);
 }
 
-#kpis li div[data-section="header"] {
+#kpis ul li div[data-section="header"] {
     --size: 50px;
 
     width: 100%;
@@ -635,19 +691,19 @@ table thead th {
     ;
 }
 
-#kpis li div[data-section="desc"] {
+#kpis ul li div[data-section="desc"] {
     @apply w-full flex flex-row justify-start items-center gap-3 flex-nowrap mt-auto;
 }
 
-#kpis li div span[data-tendency="up"] {
+#kpis ul li div span[data-tendency="up"] {
     @apply text-green-600;
 }
 
-#kpis li div span[data-tendency="down"] {
+#kpis ul li div span[data-tendency="down"] {
     @apply text-red-300;
 }
 
-#kpis li,
+#kpis ul li,
 #quick-links ul li {
     height: 100%;
     border: 1px solid var(--border-color);
@@ -655,7 +711,7 @@ table thead th {
     padding: 10px;
 }
 
-#kpis li:hover,
+#kpis ul li:hover,
 #quick-links ul li:hover {
     background-color: var(--hover-background);
 }
@@ -849,7 +905,7 @@ table thead th {
         display: none;
     }
 
-    #kpis li {
+    #kpis ul li {
         --width: 100%;
     }
 
@@ -876,7 +932,7 @@ table thead th {
         font-size: 1.4em;
     }
 
-    #kpis li {
+    #kpis ul li {
         --width: 400px;
     }
 
@@ -885,6 +941,25 @@ table thead th {
         border-width: 1px;
         min-height: 70%;
         min-width: 50%;
+    }
+}
+
+@media only screen and (max-width: 879px) {
+    main {
+        --px: 20px;
+    }
+
+    body > footer span {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 880px) {
+    main {
+        --px: 150px;
+        --py: 20px;
+
+        gap: 20px;
     }
 }
 
@@ -919,13 +994,6 @@ table thead th {
         ;
     }
 
-    main {
-        --px: 150px;
-        --py: 20px;
-
-        gap: 20px;
-    }
-
     main>section:last-of-type {
         padding-bottom: 50px;
     }
@@ -950,7 +1018,7 @@ table thead th {
         --global-gap: 25px;
     }
 
-    footer {
+    body > footer {
         display: none;
     }
 

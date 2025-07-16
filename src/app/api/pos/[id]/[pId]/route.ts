@@ -1,5 +1,5 @@
 import { EBrandType } from '@/app';
-import { POS } from '@/constants';
+import { POS } from '@/mock';
 import { NextRequest, NextResponse } from 'next/server';
 
 type Params = Promise<{ id: EBrandType, pId: number }>;

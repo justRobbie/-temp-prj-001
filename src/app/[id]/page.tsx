@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import Icons from "../icons";
 import Image from "next/image";
 import DynamicTable from "@/components/DynamicTable";
-import { PRODUCTS, VISITATIONS } from "@/constants";
+import { KPIS, PRODUCTS, VISITATIONS } from "@/mock";
 import LuandaMap from "pub/images/map.png";
 import LineChart from "@/components/Chart.Line";
 import { EBrandType } from "@/app";
@@ -17,8 +17,6 @@ export const metadata: Metadata = {
 export default async function Home({ params }: { params: Promise<{ id: EBrandType }> }) {
     const { id } = await params;
 
-    console.log(id);
-    
     const {
         ArrowUpIcon,
         CloseIcon,
@@ -29,51 +27,46 @@ export default async function Home({ params }: { params: Promise<{ id: EBrandTyp
         TrendArrowUpIcon
     } = Icons;
 
-    const KPIS = [
-        { id: "sales", title: "Equipas em campo hoje", value: 324, tendency: -3, },
-        { id: "visits", title: "Pontos de venda ativos", value: 454, tendency: 10, },
-        { id: "increase", title: "Nível médio de stock", value: 10, tendency: 3, },
-        { id: "products", title: "Campanhas ativas", value: 2, tendency: 0, },
-    ];
-
     const VISIT_STATS = [
-        { id: "stat-1", title: "Visitas feitas", value: VISITATIONS[id].reduce((a, b) => a + b["visitas"], 0), icon: <StoreIcon /> },
-        { id: "stat-2", title: "Ruturas identificadas", value: VISITATIONS[id].reduce((a, b) => a + b["ruturas"], 0), icon: <CloseIcon /> },
+        { id: "stat-1", title: "Visitas feitas", value: (VISITATIONS[id] ?? []).reduce((a, b) => a + b["visitas"], 0), icon: <StoreIcon /> },
+        { id: "stat-2", title: "Ruturas identificadas", value: (VISITATIONS[id] ?? []).reduce((a, b) => a + b["ruturas"], 0), icon: <CloseIcon /> },
         { id: "stat-3", title: "Fotos capturadas", value: 30, icon: <CameraIcon /> },
     ]
 
     return <Fragment>
         <section id="panel">
-            <ul id="kpis">
-                {KPIS.map(({ id, title, value, tendency }) => <li key={id}>
-                    <div data-section="header">
-                        <span data-text="title">{title}</span>
+            <section id="kpis">
+                <ul>
+                    {(KPIS[id] ?? []).map(({ id, title, value, tendency }) => <li key={id}>
+                        <div data-section="header">
+                            <span data-text="title">{title}</span>
 
-                        <span data-text="value">{value}</span>
+                            <span data-text="value">{value}</span>
 
-                        <div data-element="icon">
-                            <ShapesIcon />
+                            <div data-element="icon">
+                                <ShapesIcon />
+                            </div>
                         </div>
-                    </div>
 
-                    <div data-section="desc">
-                        {(tendency !== 0) && <span data-tendency={tendency > 0 ? "up" : "down"}>
-                            {tendency > 0 ? <TrendArrowUpIcon /> : <TrendArrowDownIcon />}
-                        </span>}
+                        <div data-section="desc">
+                            {(tendency !== 0) && <span data-tendency={tendency > 0 ? "up" : "down"}>
+                                {tendency > 0 ? <TrendArrowUpIcon /> : <TrendArrowDownIcon />}
+                            </span>}
 
-                        {(tendency !== 0) && <span>
-                            {tendency}%
+                            {(tendency !== 0) && <span>
+                                {tendency}%
 
-                            <span className="mx-1">{tendency > 0 ? "Aumentou" : "Diminuiu"}</span>
+                                <span className="mx-1">{tendency > 0 ? "Aumentou" : "Diminuiu"}</span>
 
-                            desde ontem
-                        </span>}
-                    </div>
-                </li>)}
-            </ul>
+                                desde ontem
+                            </span>}
+                        </div>
+                    </li>)}
+                </ul>
+            </section>
 
             <section id="line">
-                <LineChart />
+                <LineChart {...{ id }} />
             </section>
 
             {/* <section id="doughnut">
@@ -123,7 +116,7 @@ export default async function Home({ params }: { params: Promise<{ id: EBrandTyp
                     Produtos mais populares
                 </h2>
 
-                <ul className="w-full flex flex-row justify-start items-center gap-2 flex-nowrap overflow-x-auto">{PRODUCTS[id].map(({ id, thumbnail, sold, trend, name }) => <li key={id}>
+                <ul className="w-full flex flex-row justify-start items-center gap-2 flex-nowrap overflow-x-auto">{(PRODUCTS[id] ?? []).map(({ id, thumbnail, sold, trend, name }) => <li key={id}>
                     <Image src={thumbnail} alt={name} />
 
                     <p>{name}</p>

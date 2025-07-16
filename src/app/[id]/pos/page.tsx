@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { Fragment } from "react";
 import Icons from "../../icons";
 import POS from "./POS";
-import { POSType } from "@/constants";
+import { POSType } from "@/mock";
 import { APIResponseType } from "@/types";
 import { EBrandType } from "@/app";
 

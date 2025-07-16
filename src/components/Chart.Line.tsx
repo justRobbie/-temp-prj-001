@@ -3,18 +3,20 @@ import dynamic from 'next/dynamic';
 import 'chart.js/auto';
 import { useState } from 'react';
 import Icons from '@/app/icons';
+import { EBrandType } from '@/app';
+import { LINE_GRAPH_DATA } from '@/mock';
 
 const Line = dynamic(() => import('react-chartjs-2').then((mod) => mod.Line), {
     ssr: false,
 });
 
-const data = {
+const data = (id: EBrandType) => ({
     "col": {
-        labels: ['Cidade', 'Kilamba', 'Talatona'],
+        labels: LINE_GRAPH_DATA[id].col.labels,
         datasets: [
             {
                 label: 'Movimentação por localização (Colaborador)',
-                data: [65, 59, 80],
+                data: LINE_GRAPH_DATA[id].col.data,
                 fill: false,
                 borderColor: '#3c71dc',
                 tension: 0.09,
@@ -22,11 +24,11 @@ const data = {
         ],
     },
     "pos": {
-        labels: ['Viana', 'Morro-Bento', 'Golf 2', 'São Paulo', 'Mutamba'],
+        labels: LINE_GRAPH_DATA[id].pos.labels,
         datasets: [
             {
                 label: 'Movimentação por localização (Ponto de venda)',
-                data: [65, 59, 80, 81, 56],
+                data: LINE_GRAPH_DATA[id].pos.data,
                 fill: false,
                 borderColor: '#3c71dc',
                 tension: 0.09,
@@ -34,20 +36,20 @@ const data = {
         ],
     },
     "brd": {
-        labels: ['Viana', 'Morro-Bento', 'Golf 2', 'São Paulo', 'Mutamba', 'Zango 2', 'Ramiros', 'Quifica', 'Patriota', 'Belas'],
+        labels: LINE_GRAPH_DATA[id].brd.labels,
         datasets: [
             {
                 label: 'Movimentação por localização (Marca)',
-                data: [65, 59, 80, 81, 56, 1, 43, 99, 23, 6, 10],
+                data: LINE_GRAPH_DATA[id].brd.data,
                 fill: false,
                 borderColor: '#3c71dc',
                 tension: 0.09,
             },
         ],
     }
-};
+});
 
-const LineChart = () => {
+const LineChart = ({ id }: { id: EBrandType }) => {
     const [filter, setFilter] = useState<"col" | "pos" | "brd">("col");
 
     const {
@@ -77,7 +79,7 @@ const LineChart = () => {
             </button>
         </div>
 
-        <Line data={data[filter]} options={{
+        <Line data={data(id)[filter]} options={{
             maintainAspectRatio: false
         }} />
     </>

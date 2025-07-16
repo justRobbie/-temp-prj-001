@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { Fragment } from "react";
 import Icons from "../../icons";
 import POS from "./POS";
-import { POS as POS_DATA } from "@/constants";
+import { POS as POS_DATA } from "@/mock";
 import { EBrandType } from "@/app";
 
 export const metadata: Metadata = {

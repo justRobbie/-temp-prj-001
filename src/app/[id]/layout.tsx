@@ -6,12 +6,9 @@ export default async function Layout({
     params
 }: Readonly<{
     children: React.ReactNode;
-    params: { id: EBrandType };
+    params: Promise<{ id: EBrandType }>;
 }>) {
-    const { id } = params;
-    
-    console.log(id);
-    console.log(Object.values(EBrandType));
+    const id = (await params).id;
 
     if (!Object.values(EBrandType).includes(id)) notFound();
     
